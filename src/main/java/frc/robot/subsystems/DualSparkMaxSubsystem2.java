@@ -16,12 +16,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DualSparkMaxSubsystem2 extends SubsystemBase {
-    private final static CANSparkMax m_motor1 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorOne, Constants.OperatorConstants.kMotorType);
-    private final static CANSparkMax m_motor2 = new CANSparkMax(Constants.OperatorConstants.kCanIDforMotorTwo, Constants.OperatorConstants.kMotorType);
-    static RelativeEncoder m_encoder1 = m_motor2.getAlternateEncoder(Type.kQuadrature, 4096);
+  private final static CANSparkMax m_motor1 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorOne, Constants.OperatorConstants.kMotorType);
+  private final static CANSparkMax m_motor2 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorTwo, Constants.OperatorConstants.kMotorType);
+  private final static CANSparkMax m_motor3 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorThree, Constants.OperatorConstants.kMotorType);
+  private final static CANSparkMax m_motor4 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorFour, Constants.OperatorConstants.kMotorType);
+  static RelativeEncoder m_encoder1 = m_motor2.getAlternateEncoder(Type.kQuadrature, 4096);
+  static RelativeEncoder m_encoder2 = m_motor4.getAlternateEncoder(Type.kQuadrature, 4096);
   /** Creates a new ExampleSubsystem. */
   public DualSparkMaxSubsystem2 () {
     m_motor1.follow(m_motor2);
+    m_motor3.follow(m_motor4);
 
     
 
@@ -29,18 +33,28 @@ public class DualSparkMaxSubsystem2 extends SubsystemBase {
 
   }
   
-  public static void setSpeed(double speed) {
-    m_motor1.follow(m_motor2);
-    m_motor2.set(speed);
+  public static void setSpeedOfLeft(double speedLeft) {
+    //m_motor1.follow(m_motor2);
+    m_motor2.set(speedLeft);
 
     
   }
 
-  public static double EncoderPOS() {
-    m_encoder1 = m_motor1.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 4096);
+  public static void setSpeedOfRight(double speedRight) {
+    m_motor4.set(speedRight);
+  }
+
+  public static double EncoderLeftPOS() {
+    m_encoder1 = m_motor2.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 4096);
     
     return m_encoder1.getPosition();
 
+  }
+
+  public static double EncoderRightPOS() {
+    m_encoder2 = m_motor4.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 4096);
+    
+    return m_encoder2.getPosition();
   }
     
    

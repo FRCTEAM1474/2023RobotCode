@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DualSparkMaxCommand2;
-import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
+//import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.DualSparkMaxSubsystem2;
 
 /**
@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     JoystickButton spinnyButton = new JoystickButton(m_stick, 3);
-    spinnyButton.whileTrue(new DualSparkMaxCommand2(1));
+    spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
   }
 
   /**
@@ -55,7 +55,8 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     //final double encoder = DualSparkMaxSubsystem2.EncoderPOS();
-    SmartDashboard.putNumber("encoder", DualSparkMaxSubsystem2.EncoderPOS());
+    SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.EncoderLeftPOS());
+    SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.EncoderRightPOS());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

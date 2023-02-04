@@ -22,7 +22,9 @@ public final class Constants {
     public static CANSparkMax m_motor1;
     public static CANSparkMax m_motor2;
     public static int kCANIDforMotorOne = 30;
-    public static int kCanIDforMotorTwo = 32;
+    public static int kCANIDforMotorTwo = 32;
+    public static int kCANIDforMotorThree = 31;
+    public static int kCANIDforMotorFour = 33;
     public static int kAlternateQuadratureValue = 4096;
     //public static CANSparkMax m_motor5 = new CANSparkMax(30, MotorType.kBrushed);
     //public static CANSparkMax m_motor6 = new CANSparkMax(32, MotorType.kBrushed);

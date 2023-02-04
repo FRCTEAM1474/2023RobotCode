@@ -1,4 +1,4 @@
-package frc.robot.commands;
+/*package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DualSparkMaxSubsystem2;
 public class GetEncoderOutputFromSparkmaxesCommand extends CommandBase {
@@ -10,11 +10,11 @@ public class GetEncoderOutputFromSparkmaxesCommand extends CommandBase {
     @Override
     public void execute() {
         
-        final double encoder = DualSparkMaxSubsystem2.EncoderPOS();
+        final double encoder = DualSparkMaxSubsystem2.EncoderPOSRight();
         //return encoder;
     }
     @Override
     public void end(boolean interup){
         //DualSparkMaxSubsystem2.EncoderPOS();
     }
-}
+}*/
