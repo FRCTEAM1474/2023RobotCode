@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DualSparkMaxCommand2;
+import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.DualSparkMaxSubsystem2;
 
@@ -94,7 +95,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    //new GoodDualSparkMaxCommand(m_stick.getX(), m_stick.getY());
+    DualSparkMaxSubsystem2.m_robotDrive.feed();
+    DualSparkMaxSubsystem2.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
+  }
 
   @Override
   public void testInit() {

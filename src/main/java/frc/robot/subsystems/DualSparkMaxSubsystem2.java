@@ -10,6 +10,8 @@ import com.revrobotics.RelativeEncoder;
 //import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAlternateEncoder.Type;
 
+import edu.wpi.first.wpilibj.MotorSafety;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 //import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,11 +24,14 @@ public class DualSparkMaxSubsystem2 extends SubsystemBase {
   private final static CANSparkMax m_motor4 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorFour, Constants.OperatorConstants.kMotorType);
   static RelativeEncoder m_encoder1 = m_motor2.getAlternateEncoder(Type.kQuadrature, 4096);
   static RelativeEncoder m_encoder2 = m_motor4.getAlternateEncoder(Type.kQuadrature, 4096);
+  public static DifferentialDrive m_robotDrive = new DifferentialDrive(m_motor2, m_motor4);
+
   /** Creates a new ExampleSubsystem. */
   public DualSparkMaxSubsystem2 () {
     m_motor1.follow(m_motor2);
     m_motor3.follow(m_motor4);
-
+    m_motor2.setInverted(true);
+    
     
 
     
@@ -34,14 +39,21 @@ public class DualSparkMaxSubsystem2 extends SubsystemBase {
   }
   
   public static void setSpeedOfLeft(double speedLeft) {
-    //m_motor1.follow(m_motor2);
+    m_motor1.follow(m_motor2);
     m_motor2.set(speedLeft);
 
     
   }
 
   public static void setSpeedOfRight(double speedRight) {
+    m_motor3.follow(m_motor4);
     m_motor4.set(speedRight);
+  }
+
+  public static void setRobotDrive(double speed, double rotation){
+    m_robotDrive.arcadeDrive(speed, rotation);
+    
+    
   }
 
   public static double EncoderLeftPOS() {
