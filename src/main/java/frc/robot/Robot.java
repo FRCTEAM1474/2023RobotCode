@@ -15,7 +15,7 @@ import frc.robot.commands.DualSparkMaxCommand2;
 import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.DualSparkMaxSubsystem2;
-
+import frc.robot.subsystems.*;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -23,6 +23,7 @@ import frc.robot.subsystems.DualSparkMaxSubsystem2;
  * project.
  */
 public class Robot extends TimedRobot {
+  boolean solenoidTrigger = false;
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -39,6 +40,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     JoystickButton spinnyButton = new JoystickButton(m_stick, 3);
     spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
+    DualSparkMaxSubsystem2.m_encoder1.setPosition(0);
+    DualSparkMaxSubsystem2.m_encoder2.setPosition(0);
   }
 
   /**
@@ -56,8 +59,12 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     //final double encoder = DualSparkMaxSubsystem2.EncoderPOS();
-    SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.EncoderLeftPOS());
-    SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.EncoderRightPOS());
+  /* Victor commented
+    SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
+    SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());
+    */
+    SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getVelocity());
+    SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getVelocity());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -99,6 +106,35 @@ public class Robot extends TimedRobot {
     //new GoodDualSparkMaxCommand(m_stick.getX(), m_stick.getY());
     DualSparkMaxSubsystem2.m_robotDrive.feed();
     DualSparkMaxSubsystem2.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
+
+    /* Victor added 
+        SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
+    SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());*/
+
+    if (m_stick.getRawButtonPressed(11)){
+      if (!solenoidTrigger){
+        solenoidTrigger = true;
+      }
+      else {
+        solenoidTrigger = false;
+      }
+  }
+  ShiftingGearboxesSubsystem.m_solenoid.set(solenoidTrigger);
+  ShiftingGearboxesSubsystem.m_solenoidTwo.set(solenoidTrigger);
+  //boolean solenoid = m_stickTwo.toggleWhenPresssed(kSolenoidButton)
+  //m_solenoid.set(m_stickTwo.toggleWhenPresssed(kSolenoidButton));
+  /*
+   * In order to set the double solenoid, if just one button
+   * is pressed, set the solenoid to correspond to that button.
+   * If both are pressed, set the solenoid will be set to Forwards.
+   */
+  /* Victor commented
+   if (m_stick.getRawButton(kDoubleSolenoidForward)) {
+    m_doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+  } else if (m_stickTwo.getRawButton(kDoubleSolenoidReverse)) {
+    m_doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+  }
+  */
   }
 
   @Override
