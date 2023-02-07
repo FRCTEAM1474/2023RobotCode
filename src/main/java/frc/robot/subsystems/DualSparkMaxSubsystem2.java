@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.SparkMaxAlternateEncoder;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 //import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -12,25 +13,28 @@ import com.revrobotics.SparkMaxAlternateEncoder.Type;
 
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 //import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
 public class DualSparkMaxSubsystem2 extends SubsystemBase {
-  private final static CANSparkMax m_motor1 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorOne, Constants.OperatorConstants.kMotorType);
-  private final static CANSparkMax m_motor2 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorTwo, Constants.OperatorConstants.kMotorType);
-  private final static CANSparkMax m_motor3 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorThree, Constants.OperatorConstants.kMotorType);
-  private final static CANSparkMax m_motor4 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorFour, Constants.OperatorConstants.kMotorType);
-  public static RelativeEncoder m_encoder1 = m_motor1.getAlternateEncoder(Type.kQuadrature, 4096);
-  public static RelativeEncoder m_encoder2 = m_motor3.getAlternateEncoder(Type.kQuadrature, 4096);
-  public static DifferentialDrive m_robotDrive = new DifferentialDrive(m_motor2, m_motor4);
+  private final static WPI_TalonSRX m_motor1 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorOne);
+  private final static WPI_TalonSRX m_motor2 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorTwo);
+  private final static WPI_TalonSRX m_motor3 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorThree);
+  private final static WPI_TalonSRX m_motor4 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorFour);
+  //public static RelativeEncoder m_encoder1 = m_motor1.getAlternateEncoder(Type.kQuadrature, 4096);
+  //public static RelativeEncoder m_encoder2 = m_motor3.getAlternateEncoder(Type.kQuadrature, 4096);
+  public static MotorControllerGroup m_leftControllerGroup = new MotorControllerGroup(m_motor1, m_motor2);
+  public static MotorControllerGroup m_rightControllerGroup = new MotorControllerGroup(m_motor3, m_motor4);
+  public static DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftControllerGroup, m_rightControllerGroup);
 
   /** Creates a new ExampleSubsystem. */
   public DualSparkMaxSubsystem2 () {
-    m_motor2.follow(m_motor1);
-    m_motor4.follow(m_motor3);
-    m_motor1.setInverted(true);
+    //m_motor2.follow(m_motor1);
+    //m_motor4.follow(m_motor3);
+    //m_motor1.setInverted(true);
     
     
 
