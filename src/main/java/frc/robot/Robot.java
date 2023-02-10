@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DualSparkMaxCommand2;
-import frc.robot.commands.GoodDualSparkMaxCommand;
+//import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.drivetrainsubsystem;
 import frc.robot.subsystems.*;
