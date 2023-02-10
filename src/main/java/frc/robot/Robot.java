@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DualSparkMaxCommand2;
 import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
-import frc.robot.subsystems.DualSparkMaxSubsystem2;
+import frc.robot.subsystems.drivetrainsubsystem;
 import frc.robot.subsystems.*;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -40,8 +40,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     JoystickButton spinnyButton = new JoystickButton(m_stick, 3);
     spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
-    DualSparkMaxSubsystem2.m_encoder1.setPosition(0);
-    DualSparkMaxSubsystem2.m_encoder2.setPosition(0);
+    drivetrainsubsystem.ZeroEncoderLeftPOS();
+    drivetrainsubsystem.ZeroEncoderRightPOS();
   }
 
   /**
@@ -63,8 +63,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
     SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());
     */
-    SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getVelocity());
-    SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getVelocity());
+    SmartDashboard.putNumber("encoderleft", drivetrainsubsystem.EncoderLeftPOS());
+    SmartDashboard.putNumber("encoderright", drivetrainsubsystem.EncoderRightPOS());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -104,8 +104,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //new GoodDualSparkMaxCommand(m_stick.getX(), m_stick.getY());
-    DualSparkMaxSubsystem2.m_robotDrive.feed();
-    DualSparkMaxSubsystem2.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
+    drivetrainsubsystem.m_robotDrive.feed();
+    drivetrainsubsystem.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
 
     /* Victor added 
         SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
@@ -119,8 +119,15 @@ public class Robot extends TimedRobot {
         solenoidTrigger = false;
       }
   }
-  ShiftingGearboxesSubsystem.m_solenoid.set(solenoidTrigger);
-  ShiftingGearboxesSubsystem.m_solenoidTwo.set(solenoidTrigger);
+  if (solenoidTrigger) {
+    ShiftingGearboxesSubsystem.m_solenoid.set(true);
+    ShiftingGearboxesSubsystem.m_solenoidTwo.set(false);
+  }
+  else {
+    ShiftingGearboxesSubsystem.m_solenoidTwo.set(true);
+    ShiftingGearboxesSubsystem.m_solenoid.set(false);
+  }
+  
   //boolean solenoid = m_stickTwo.toggleWhenPresssed(kSolenoidButton)
   //m_solenoid.set(m_stickTwo.toggleWhenPresssed(kSolenoidButton));
   /*

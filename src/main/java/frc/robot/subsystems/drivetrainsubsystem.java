@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-public class DualSparkMaxSubsystem2 extends SubsystemBase {
+public class drivetrainsubsystem extends SubsystemBase {
   private final static WPI_TalonSRX m_motor1 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorOne);
   private final static WPI_TalonSRX m_motor2 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorTwo);
   private final static WPI_TalonSRX m_motor3 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorThree);
@@ -31,7 +31,7 @@ public class DualSparkMaxSubsystem2 extends SubsystemBase {
   public static DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftControllerGroup, m_rightControllerGroup);
 
   /** Creates a new ExampleSubsystem. */
-  public DualSparkMaxSubsystem2 () {
+  public drivetrainsubsystem () {
     //m_motor2.follow(m_motor1);
     //m_motor4.follow(m_motor3);
     //m_motor1.setInverted(true);
@@ -60,17 +60,24 @@ public class DualSparkMaxSubsystem2 extends SubsystemBase {
     
   }
 
-  public static void EncoderLeftPOS() {
-    m_encoder1 = m_motor1.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 4096);
+  public static double EncoderLeftPOS() {
+    final double m_encoder1 = m_motor2.getSelectedSensorPosition();
     
-    //return m_encoder1.getPosition();
+    return m_encoder1;
 
   }
 
-  public static void EncoderRightPOS() {
-    m_encoder2 = m_motor3.getAlternateEncoder(SparkMaxAlternateEncoder.Type.kQuadrature, 4096);
+  public static double EncoderRightPOS() {
+    final double m_encoder2 = m_motor3.getSelectedSensorPosition();
     
-    //return m_encoder2.getPosition();
+    return m_encoder2;
+  }
+
+  public static void ZeroEncoderLeftPOS() {
+    m_motor1.setSelectedSensorPosition(0);
+  }
+  public static void ZeroEncoderRightPOS() {
+    m_motor3.setSelectedSensorPosition(0);
   }
     
    

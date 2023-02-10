@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.DualSparkMaxSubsystem2;
+import frc.robot.subsystems.drivetrainsubsystem;
 //import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -18,7 +18,7 @@ public class ExampleCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ExampleCommand(DualSparkMaxSubsystem2 subsystem) {
+  public ExampleCommand(drivetrainsubsystem subsystem) {
     //m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);

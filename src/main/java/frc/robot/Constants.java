@@ -20,8 +20,8 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverControllerPort2 = 1;
     //public static final int kMotorType = MotorType.kBrushed;
-    public static CANSparkMax m_motor1;
-    public static CANSparkMax m_motor2;
+    //public static CANSparkMax m_motor1;
+    //public static CANSparkMax m_motor2;
     public static int kCANIDforMotorOne = 33;
     public static int kCANIDforMotorTwo = 30;
     public static int kCANIDforMotorThree = 32;

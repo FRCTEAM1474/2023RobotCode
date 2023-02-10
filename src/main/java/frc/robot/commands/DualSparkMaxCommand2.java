@@ -1,6 +1,6 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DualSparkMaxSubsystem2;
+import frc.robot.subsystems.drivetrainsubsystem;
 public class DualSparkMaxCommand2 extends CommandBase {
     double m_LeftSpeed;
     double m_RightSpeed;
@@ -11,17 +11,17 @@ public class DualSparkMaxCommand2 extends CommandBase {
     }
     @Override
     public void initialize() {
-        DualSparkMaxSubsystem2.setSpeedOfLeft(m_LeftSpeed);
-        DualSparkMaxSubsystem2.setSpeedOfRight(m_RightSpeed);
+        drivetrainsubsystem.setSpeedOfLeft(m_LeftSpeed);
+        drivetrainsubsystem.setSpeedOfRight(m_RightSpeed);
     }
     @Override
     public void execute() {
-        DualSparkMaxSubsystem2.setSpeedOfLeft(m_LeftSpeed);
-        DualSparkMaxSubsystem2.setSpeedOfRight(m_RightSpeed);
+        drivetrainsubsystem.setSpeedOfLeft(m_LeftSpeed);
+        drivetrainsubsystem.setSpeedOfRight(m_RightSpeed);
     }
     @Override
     public void end(boolean interup){
-        DualSparkMaxSubsystem2.setSpeedOfLeft(0);
-        DualSparkMaxSubsystem2.setSpeedOfRight(0);
+        drivetrainsubsystem.setSpeedOfLeft(0);
+        drivetrainsubsystem.setSpeedOfRight(0);
     }
 }
