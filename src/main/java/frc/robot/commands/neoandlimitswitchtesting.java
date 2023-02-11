@@ -29,22 +29,7 @@ public class neoandlimitswitchtesting extends CommandBase {
 
     @Override
     public void execute() {
-        /*if (testlimitswitchessubsystem.leftlimitswitchstatus()){
-            if (m_direction > 0 ) {
-                neosubsystem.setSpeed(m_direction);
-            }
-            
-        }
 
-        if (testlimitswitchessubsystem.rightlimitswitchstatus()) {
-            if (m_direction < 0) {
-                neosubsystem.setSpeed(m_direction);
-            }
-            
-        }
-        if (!testlimitswitchessubsystem.rightlimitswitchstatus() && !testlimitswitchessubsystem.leftlimitswitchstatus()) {
-            neosubsystem.setSpeed(m_direction);
-        }*/
         if (m_direction > 0) {
             if (!testlimitswitchessubsystem.leftlimitswitchstatus()) {
                 // We are going up and top limit is tripped so stop

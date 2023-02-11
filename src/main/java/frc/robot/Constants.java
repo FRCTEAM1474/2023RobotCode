@@ -20,8 +20,6 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverControllerPort2 = 1;
     public static final MotorType kMotorType = MotorType.kBrushless;
-    //public static CANSparkMax m_motor1;
-    //public static CANSparkMax m_motor2;
     public static int kCANIDforMotorOne = 33;
     public static int kCANIDforMotorTwo = 30;
     public static int kCANIDforMotorThree = 32;
@@ -29,8 +27,6 @@ public final class Constants {
     public static int kCANIDforTestNeo = 45;
     public static int kAlternateQuadratureValue = 4096;
     public static int kSolenoidButton = 11;
-    //public static CANSparkMax m_motor5 = new CANSparkMax(30, MotorType.kBrushed);
-    //public static CANSparkMax m_motor6 = new CANSparkMax(32, MotorType.kBrushed);
     
   }
 }
