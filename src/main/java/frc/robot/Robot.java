@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DualSparkMaxCommand2;
+import frc.robot.commands.neoandlimitswitchtesting;
 //import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.drivetrainsubsystem;
@@ -40,6 +41,10 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     JoystickButton spinnyButton = new JoystickButton(m_stick, 3);
     spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
+    JoystickButton leftneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 7);
+    JoystickButton rightneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 8);
+    leftneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(0.1));
+    rightneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(-0.1));
     drivetrainsubsystem.ZeroEncoderLeftPOS();
     drivetrainsubsystem.ZeroEncoderRightPOS();
   }

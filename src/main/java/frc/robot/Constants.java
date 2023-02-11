@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-//import com.revrobotics.CANSparkMax;
-//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -19,13 +19,14 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverControllerPort2 = 1;
-    //public static final int kMotorType = MotorType.kBrushed;
+    public static final MotorType kMotorType = MotorType.kBrushless;
     //public static CANSparkMax m_motor1;
     //public static CANSparkMax m_motor2;
     public static int kCANIDforMotorOne = 33;
     public static int kCANIDforMotorTwo = 30;
     public static int kCANIDforMotorThree = 32;
     public static int kCANIDforMotorFour = 31;
+    public static int kCANIDforTestNeo = 45;
     public static int kAlternateQuadratureValue = 4096;
     public static int kSolenoidButton = 11;
     //public static CANSparkMax m_motor5 = new CANSparkMax(30, MotorType.kBrushed);

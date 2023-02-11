@@ -2,30 +2,30 @@
 // // Open Source Software; you can modify and/or share it under the terms of
 // // the WPILib BSD license file in the root directory of this project.
 
-// package frc.robot.subsystems;
+package frc.robot.subsystems;
 
-// import com.revrobotics.CANSparkMax;
-// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-// import edu.wpi.first.wpilibj2.command.CommandBase;
-// import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-// import frc.robot.Constants;
+import frc.robot.Constants;
 
-// public class DualSparkMaxSubsystem extends SubsystemBase {
-//     CANSparkMax m_motor1 = new CANSparkMax(Constants.OperatorConstants.kCANIDforMotorOne, Constants.OperatorConstants.kMotorType);
-//     CANSparkMax m_motor2 = new CANSparkMax(Constants.OperatorConstants.kCanIDforMotorTwo, Constants.OperatorConstants.kMotorType);
-//   /** Creates a new ExampleSubsystem. */
-//   public DualSparkMaxSubsystem() {
+public class neosubsystem extends SubsystemBase {
+    public static CANSparkMax m_testneo = new CANSparkMax(Constants.OperatorConstants.kCANIDforTestNeo, Constants.OperatorConstants.kMotorType);
+  /** Creates a new ExampleSubsystem. */
+  public neosubsystem() {
+  }
     
-    
-//     m_motor1.follow(m_motor2)//;
 
-//     public static void setSpeed(double speed){
-//         m_motor2.set(speed);
-//     }
+    public static void setSpeed(double neospeed){
+        double m_neospeed = neospeed;
+        m_testneo.set(m_neospeed);
+    }
    
-// }
+}
+
   
     
 
