@@ -29,7 +29,7 @@ public class neoandlimitswitchtesting extends CommandBase {
 
     @Override
     public void execute() {
-        if (testlimitswitchessubsystem.leftlimitswitchstatus()){
+        /*if (testlimitswitchessubsystem.leftlimitswitchstatus()){
             if (m_direction > 0 ) {
                 neosubsystem.setSpeed(m_direction);
             }
@@ -44,6 +44,23 @@ public class neoandlimitswitchtesting extends CommandBase {
         }
         if (!testlimitswitchessubsystem.rightlimitswitchstatus() && !testlimitswitchessubsystem.leftlimitswitchstatus()) {
             neosubsystem.setSpeed(m_direction);
+        }*/
+        if (m_direction > 0) {
+            if (!testlimitswitchessubsystem.leftlimitswitchstatus()) {
+                // We are going up and top limit is tripped so stop
+                neosubsystem.setSpeed(0);
+            } else {
+                // We are going up but top limit is not tripped so go at commanded speed
+                neosubsystem.setSpeed(m_direction);
+            }
+        } else {
+            if (!testlimitswitchessubsystem.rightlimitswitchstatus()) {
+                // We are going down and bottom limit is tripped so stop
+                neosubsystem.setSpeed(0);
+            } else {
+                // We are going down but bottom limit is not tripped so go at commanded speed
+                neosubsystem.setSpeed(m_direction);
+            }
         }
     }
     @Override
