@@ -27,6 +27,21 @@ public final class Constants {
     public static int kCANIDforTestNeo = 45;
     public static int kAlternateQuadratureValue = 4096;
     public static int kSolenoidButton = 11;
+
+    public static final double ksVolts = 0.58029;
+    public static final double kvVoltSecondsPerMeter = 6.8565;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.87514;
+
+    public static final double kPDriveVel = 3.8826;
+
+    public static final class AutoConstants {
+      public static final double kMaxSpeedMetersPerSecond = 6.706;
+      public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+  
+      // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+      public static final double kRamseteB = 2;
+      public static final double kRamseteZeta = 0.7;
+    }
     
   }
 }
