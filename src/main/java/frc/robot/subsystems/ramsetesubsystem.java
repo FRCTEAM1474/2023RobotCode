@@ -35,20 +35,20 @@ public class ramsetesubsystem extends SubsystemBase {
           DriveConstants.kLeftEncoderPorts[1],
           DriveConstants.kLeftEncoderReversed);*/
 
-    private final double m_leftEncoderPosition = ramsetesubsystem.m_motor2.getSelectedSensorPosition();
+    private final static double m_leftEncoderPosition = ramsetesubsystem.m_motor2.getSelectedSensorPosition();
     private final double m_leftEncoderVelocity = ramsetesubsystem.m_motor2.getSelectedSensorVelocity();
-    private final double m_leftEncoderDistance = (m_leftEncoderPosition * 0.0001168893);
+    private final static double m_leftEncoderDistance = (m_leftEncoderPosition * 0.0001168893);
 
   // The right-side drive encoder
-    private final double m_rightEncoderPosition = ramsetesubsystem.m_motor3.getSelectedSensorPosition();
+    private final static double m_rightEncoderPosition = ramsetesubsystem.m_motor3.getSelectedSensorPosition();
     private final double m_rightEncoderVelocity = ramsetesubsystem.m_motor3.getSelectedSensorVelocity();
-    private final double m_rightEncoderDistance = (m_rightEncoderPosition * 0.0001168893);
+    private final static double m_rightEncoderDistance = (m_rightEncoderPosition * 0.0001168893);
 
   // The gyro sensor
-  private final Gyro m_gyro = new ADXRS450_Gyro();
+  private final static Gyro m_gyro = new ADXRS450_Gyro();
 
   // Odometry class for tracking robot pose
-  private final DifferentialDriveOdometry m_odometry;
+  private static DifferentialDriveOdometry m_odometry;
 
   /** Creates a new DriveSubsystem. */
   public ramsetesubsystem() {
@@ -98,7 +98,7 @@ public class ramsetesubsystem extends SubsystemBase {
    *
    * @param pose The pose to which to set the odometry.
    */
-  public void resetOdometry(Pose2d pose) {
+  public static void resetOdometry(Pose2d pose) {
     resetEncoders();
     m_odometry.resetPosition(
         m_gyro.getRotation2d(), m_leftEncoderDistance, m_rightEncoderDistance, pose);
@@ -124,10 +124,11 @@ public class ramsetesubsystem extends SubsystemBase {
     m_leftControllerGroup.setVoltage(leftVolts);
     m_rightControllerGroup.setVoltage(rightVolts);
     m_robotDrive.feed();
+
   }
 
   /** Resets the drive encoders to currently read a position of 0. */
-  public void resetEncoders() {
+  public static void resetEncoders() {
     m_motor2.setSelectedSensorPosition(0);
     m_motor3.setSelectedSensorPosition(0);
   }
