@@ -1,4 +1,33 @@
 {
+  "HALProvider": {
+    "Other Devices": {
+      "ADXRS450[0]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[30]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[31]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[32]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[33]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo"
