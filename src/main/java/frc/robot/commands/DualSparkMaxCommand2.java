@@ -1,4 +1,4 @@
-package frc.robot.commands;
+/*package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrainsubsystem;
 public class DualSparkMaxCommand2 extends CommandBase {
@@ -24,4 +24,4 @@ public class DualSparkMaxCommand2 extends CommandBase {
         drivetrainsubsystem.setSpeedOfLeft(0);
         drivetrainsubsystem.setSpeedOfRight(0);
     }
-}
+}*/

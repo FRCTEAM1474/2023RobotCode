@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DualSparkMaxCommand2;
+//import frc.robot.commands.DualSparkMaxCommand2;
 import frc.robot.commands.neoandlimitswitchtesting;
+//import frc.robot.commands.updatePoseVisually;
 //import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
-import frc.robot.subsystems.drivetrainsubsystem;
+//import frc.robot.subsystems.drivetrainsubsystem;
 import frc.robot.subsystems.*;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -42,13 +43,13 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     JoystickButton spinnyButton = new JoystickButton(m_stick, 3);
-    spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
+    //spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
     JoystickButton leftneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 7);
     JoystickButton rightneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 8);
     leftneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(0.1));
     rightneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(-0.1));
-    drivetrainsubsystem.ZeroEncoderLeftPOS();
-    drivetrainsubsystem.ZeroEncoderRightPOS();
+    //drivetrainsubsystem.ZeroEncoderLeftPOS();
+    //drivetrainsubsystem.ZeroEncoderRightPOS();
   }
 
   /**
@@ -71,8 +72,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
     SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());
     */
-    SmartDashboard.putNumber("encoderleft", drivetrainsubsystem.EncoderLeftPOS());
-    SmartDashboard.putNumber("encoderright", drivetrainsubsystem.EncoderRightPOS());
+    //SmartDashboard.putNumber("encoderleft", drivetrainsubsystem.EncoderLeftPOS());
+    //SmartDashboard.putNumber("encoderright", drivetrainsubsystem.EncoderRightPOS());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -88,14 +89,15 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    m_robotContainer.getAutonomousCommand().schedule();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    //new updatePoseVisually().schedule();
+    
+  }
 
   @Override
   public void teleopInit() {
@@ -111,9 +113,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    //new updatePoseVisually().schedule();
     //new GoodDualSparkMaxCommand(m_stick.getX(), m_stick.getY());
-    drivetrainsubsystem.m_robotDrive.feed();
-    drivetrainsubsystem.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
+    //drivetrainsubsystem.m_robotDrive.feed();
+    //drivetrainsubsystem.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
+    frc.robot.subsystems.driveTrain.teleOp(m_stick.getX(), m_stick.getY());
 
     /* Victor added 
         SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());

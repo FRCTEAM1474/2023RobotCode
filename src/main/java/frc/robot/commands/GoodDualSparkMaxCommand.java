@@ -1,4 +1,4 @@
-package frc.robot.commands;
+/*package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrainsubsystem;
 public class GoodDualSparkMaxCommand extends CommandBase {
@@ -21,4 +21,4 @@ public class GoodDualSparkMaxCommand extends CommandBase {
     public void end(boolean interup){
         drivetrainsubsystem.setRobotDrive(0, 0);
     }
-}
+}*/
