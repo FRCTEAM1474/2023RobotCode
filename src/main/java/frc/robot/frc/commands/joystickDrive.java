@@ -38,6 +38,7 @@ public class joystickDrive extends CommandBase {
     @Override
     public void initialize() {
       System.out.println("initialized");//slayyyyyyyyyyyyyyyyy
+       //this robot can indeed slay. perhaps it should slay david's leg?
     }
 
   // Called every time the scheduler runs while the command is scheduled.

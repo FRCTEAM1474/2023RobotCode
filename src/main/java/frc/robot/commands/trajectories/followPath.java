@@ -29,10 +29,13 @@ public class followPath {
     // for every path in the group
     
     //ArrayList<PathPlannerTrajectory> pathGroup = (ArrayList<PathPlannerTrajectory>) PathPlanner.loadPathGroup("new Path", new PathConstraints(1, 1));
-    static PathPlannerTrajectory traj = PathPlanner.loadPath("New Path", new PathConstraints(1, 1));
+    static PathPlannerTrajectory traj = PathPlanner.loadPath("New Path", new PathConstraints(
+        Constants.OperatorConstants.AutoConstants.kMaxSpeedMetersPerSecond, 
+        Constants.OperatorConstants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
     private static double kv = Constants.OperatorConstants.kvVoltSecondsPerMeter;
     private static double ka = Constants.OperatorConstants.kaVoltSecondsSquaredPerMeter;
-    private static double ks = Constants.OperatorConstants.ksVolts;
+    private static double ks = Constants.OperatorConstants.ksVolts ;
     static Subsystem m_dTrain = driveTrain.getInstance();
     private static Map<String, Command> eventMap;
 

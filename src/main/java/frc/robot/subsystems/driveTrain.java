@@ -182,7 +182,7 @@ public class driveTrain extends beanieDriveTrain {
     public BiConsumer<Double, Double> getBiConsumer() {
         BiConsumer<Double, Double> biC = (leftVoltage, rightVoltage) -> {
           leftControllerGroup.setVoltage(-leftVoltage);
-          rightControllerGroup.setVoltage(rightVoltage);
+          rightControllerGroup.setVoltage(-rightVoltage);
           super.mDrive.feed();  
         };
         return biC;
@@ -246,8 +246,8 @@ public class driveTrain extends beanieDriveTrain {
         new SimpleMotorFeedforward(ks, kv, ka),
         driveTrain.getInstance().getKinematics(),
         driveTrain.getInstance().getWheelSpeedSupplier(),
-        new PIDController(.06, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-        new PIDController(.06, 0, 0),
+        new PIDController(3.8826, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+        new PIDController(3.8826, 0, 0),
         driveTrain.getInstance().getBiConsumer(),
         this
         );

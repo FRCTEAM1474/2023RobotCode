@@ -7,7 +7,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0,
+        "x": 1.5360117487437845,
         "y": 3.0
       },
       "holonomicAngle": 0,
@@ -28,7 +28,7 @@
         "y": 3.0022729582620835
       },
       "prevControl": {
-        "x": 3.0,
+        "x": 3.7123224180938683,
         "y": 3.0022729582620835
       },
       "nextControl": null,
@@ -45,5 +45,8 @@
       }
     }
   ],
+  "maxVelocity": 2.588,
+  "maxAcceleration": 0.1,
+  "isReversed": null,
   "markers": []
 }

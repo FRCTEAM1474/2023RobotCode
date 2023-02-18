@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
     //new GoodDualSparkMaxCommand(m_stick.getX(), m_stick.getY());
     //drivetrainsubsystem.m_robotDrive.feed();
     //drivetrainsubsystem.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
-    frc.robot.subsystems.driveTrain.teleOp(m_stick.getX(), m_stick.getY());
+    frc.robot.subsystems.driveTrain.teleOp(m_stick.getY(), m_stick.getX()) ;
 
     /* Victor added 
         SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
