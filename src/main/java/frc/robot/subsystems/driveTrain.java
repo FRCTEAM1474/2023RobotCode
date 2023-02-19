@@ -70,9 +70,9 @@ public class driveTrain extends beanieDriveTrain {
   DifferentialDriveKinematics dKinematics = new DifferentialDriveKinematics( Units.inchesToMeters(21.12)); //tbd
   DifferentialDrivePoseEstimator dEstimator = new DifferentialDrivePoseEstimator(dKinematics, getRotation(), leftDistance(), rightDistance(), new Pose2d(1.0, 3.0 ,getRotation()));
   private static driveTrain mDriveTrain = new driveTrain();
-    private static double kv = 1.055;
-    private static double ka = .27947;
-    private static double ks = .2432 ;
+    private static double kv = 4.7415;//4.6897;//4.6692;//1.7844;
+    private static double ka = 1.0203;//1.0112;//1.1315;//0.82566;
+    private static double ks = 0.72605;//0.75251;//0.65714;//0.81059;
     public  static HashMap<String, Command> eventMap = new HashMap<>();
     
 
@@ -180,10 +180,12 @@ public class driveTrain extends beanieDriveTrain {
     }
 
     public BiConsumer<Double, Double> getBiConsumer() {
+        mDrive.setMaxOutput(0.58333333333);
         BiConsumer<Double, Double> biC = (leftVoltage, rightVoltage) -> {
           leftControllerGroup.setVoltage(-leftVoltage);
           rightControllerGroup.setVoltage(-rightVoltage);
-          super.mDrive.feed();  
+          //super.mDrive.feed();  
+          mDrive.setSafetyEnabled(false);
         };
         return biC;
     }
@@ -233,7 +235,7 @@ public class driveTrain extends beanieDriveTrain {
     Supplier<DifferentialDriveWheelSpeeds> s = () -> new DifferentialDriveWheelSpeeds((Units.inchesToMeters(getLeftVelocity() * 6*Math.PI)/8.01), (Units.inchesToMeters(getRightVelocity()* 6*Math.PI)/8.01));
     return s;
  }
- public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+ public Command  followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
 
   if(isFirstPath){
     this.resetPose(traj.getInitialPose());
@@ -246,8 +248,8 @@ public class driveTrain extends beanieDriveTrain {
         new SimpleMotorFeedforward(ks, kv, ka),
         driveTrain.getInstance().getKinematics(),
         driveTrain.getInstance().getWheelSpeedSupplier(),
-        new PIDController(3.8826, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-        new PIDController(3.8826, 0, 0),
+        new PIDController(Constants.OperatorConstants.kPDriveVel, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+        new PIDController(Constants.OperatorConstants.kPDriveVel, 0, 0),
         driveTrain.getInstance().getBiConsumer(),
         this
         );

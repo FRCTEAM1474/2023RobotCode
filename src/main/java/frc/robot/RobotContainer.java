@@ -65,11 +65,13 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  static PathPlannerTrajectory traj = PathPlanner.loadPath("New Path", new PathConstraints(Constants.OperatorConstants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.OperatorConstants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+  static PathPlannerTrajectory traj = PathPlanner.loadPath("New New Path", new PathConstraints(
+    Constants.OperatorConstants.AutoConstants.kMaxSpeedMetersPerSecond, 
+    Constants.OperatorConstants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return driveTrain.getInstance().followTrajectoryCommand(traj, true);
+    return driveTrain.getInstance().followTrajectoryCommand(traj, false);
     //return driveTrain.getInstance().followTrajectoryCommand(traj, true);
   }
 }

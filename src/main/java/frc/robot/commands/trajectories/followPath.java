@@ -33,9 +33,9 @@ public class followPath {
         Constants.OperatorConstants.AutoConstants.kMaxSpeedMetersPerSecond, 
         Constants.OperatorConstants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
-    private static double kv = Constants.OperatorConstants.kvVoltSecondsPerMeter;
-    private static double ka = Constants.OperatorConstants.kaVoltSecondsSquaredPerMeter;
-    private static double ks = Constants.OperatorConstants.ksVolts ;
+    private static double kv = 4.6692;//1.7844; //Constants.OperatorConstants.kvVoltSecondsPerMeter;
+    private static double ka = 1.1315;//0.82566;//Constants.OperatorConstants.kaVoltSecondsSquaredPerMeter;
+    private static double ks = 0.65714;//0.81059; //Constants.OperatorConstants.ksVolts ;
     static Subsystem m_dTrain = driveTrain.getInstance();
     private static Map<String, Command> eventMap;
 
