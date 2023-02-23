@@ -88,9 +88,12 @@ public class Robot extends TimedRobot {
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
+    /*if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }
+    }*/
+    System.out.println("auto init is running 1");
+    m_robotContainer.getAutonomousCommand().schedule();
+    System.out.println("auto init is running 2");
   }
 
   /** This function is called periodically during autonomous. */
