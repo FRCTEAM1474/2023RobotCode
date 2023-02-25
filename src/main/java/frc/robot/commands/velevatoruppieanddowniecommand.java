@@ -1,12 +1,12 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.helevatorsubsystem;
+import frc.robot.subsystems.velevatorsubsystem;
 
-public class slelavatorinnieandoutiecommand extends CommandBase {
+public class velevatoruppieanddowniecommand extends CommandBase {
     double m_direction;
     boolean isrightpressed; 
     boolean isleftpressed;
-    public slelavatorinnieandoutiecommand(double direction){
+    public velevatoruppieanddowniecommand(double direction){
         m_direction = direction;
     }
     @Override
@@ -29,25 +29,25 @@ public class slelavatorinnieandoutiecommand extends CommandBase {
     @Override
     public void execute() {
         if (m_direction > 0) {
-            if (!helevatorsubsystem.extendedsliderlimitswitchstatus()) {
+            if (!velevatorsubsystem.extendedvelevatorlimitswitchstatus()) {
                 // We are going up and top limit is tripped so stop
-                helevatorsubsystem.setspeedofsliderMotor(0);
+                velevatorsubsystem.setspeedofVelevatorMotors(0);
             } else {
                 // We are going up but top limit is not tripped so go at commanded speed
-                helevatorsubsystem.setspeedofsliderMotor(m_direction);
+                velevatorsubsystem.setspeedofVelevatorMotors(m_direction);
             }
         } else {
-            if (!helevatorsubsystem.retractedsliderlimitswitchstatus()) {
+            if (!velevatorsubsystem.retractedvelevatorlimitswitchstatus()) {
                 // We are going down and bottom limit is tripped so stop
-                helevatorsubsystem.setspeedofsliderMotor(0);
+                velevatorsubsystem.setspeedofVelevatorMotors(0);
             } else {
                 // We are going down but bottom limit is not tripped so go at commanded speed
-                helevatorsubsystem.setspeedofsliderMotor(m_direction);
+                velevatorsubsystem.setspeedofVelevatorMotors(m_direction);
             }
         }
     }
     @Override
     public void end(boolean interup){
-        helevatorsubsystem.setspeedofsliderMotor(0);
+        velevatorsubsystem.setspeedofVelevatorMotors(0);
     }
 }

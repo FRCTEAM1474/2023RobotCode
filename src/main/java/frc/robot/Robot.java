@@ -12,11 +12,17 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DualSparkMaxCommand2;
+import frc.robot.commands.flipperinnieandoutiecommand;
+import frc.robot.commands.helevatorinnieandoutiecommand;
 import frc.robot.commands.neoandlimitswitchtesting;
+import frc.robot.commands.slelavatorinnieandoutiecommand;
+import frc.robot.commands.velevatorEXACTuppieanddowniecommand;
+import frc.robot.commands.velevatoruppieanddowniecommand;
 //import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.drivetrainsubsystem;
 import frc.robot.subsystems.*;
+import frc.robot.Bling;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -31,6 +37,8 @@ public class Robot extends TimedRobot {
 
   private final Joystick m_stick = new Joystick(0);
   private final Joystick m_stickTwo = new Joystick(1);
+
+  public static Bling bling;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -54,10 +62,37 @@ public class Robot extends TimedRobot {
     JoystickButton extendvelevatorbutton = new JoystickButton(m_stickTwo, 6);
     JoystickButton retractvelevatorbutton = new JoystickButton(m_stickTwo, 4);
 
+    JoystickButton extendhelevatorbutton = new JoystickButton(m_stickTwo, 1);
+    JoystickButton retracthelevatorbutton = new JoystickButton(m_stickTwo, 2);
+
+    JoystickButton movevelevatortobottom = new JoystickButton(m_stickTwo, 7);
+    JoystickButton movevelevatortomidanddoublesubstation = new JoystickButton(m_stickTwo, 9);
+    JoystickButton movevelevatortohigh = new JoystickButton(m_stickTwo, 11);
+
+    extendflipperbutton.whileTrue(new flipperinnieandoutiecommand(-0.1));
+    retractflipperbutton.whileTrue(new flipperinnieandoutiecommand(0.1));
+
+    extendsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(0.1));
+    retractsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(-0.1));
+
+    extendhelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(-0.1));
+    retracthelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(0.1));
+
+    extendvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(0.1));
+    retractvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(-0.1));
+
+    movevelevatortobottom.whileTrue(new velevatorEXACTuppieanddowniecommand(5)); //should be 0 and not whileTrue
+    movevelevatortomidanddoublesubstation.whileTrue(new velevatorEXACTuppieanddowniecommand(44)); //should not be whileTrue
+    movevelevatortohigh.whileTrue(new velevatorEXACTuppieanddowniecommand(58)); //should be 63 and not whileTrue
+    
+
+
     leftneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(0.1));
     rightneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(-0.1));
     drivetrainsubsystem.ZeroEncoderLeftPOS();
     drivetrainsubsystem.ZeroEncoderRightPOS();
+
+    bling = new Bling();
   }
 
   /**

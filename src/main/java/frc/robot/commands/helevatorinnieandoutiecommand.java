@@ -1,12 +1,12 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.helavatorsubsystem;
+import frc.robot.subsystems.helevatorsubsystem;
 
-public class helavatorinnieandoutiecommand extends CommandBase {
+public class helevatorinnieandoutiecommand extends CommandBase {
     double m_direction;
     boolean isrightpressed; 
     boolean isleftpressed;
-    public helavatorinnieandoutiecommand(double direction){
+    public helevatorinnieandoutiecommand(double direction){
         m_direction = direction;
     }
     @Override
@@ -29,25 +29,25 @@ public class helavatorinnieandoutiecommand extends CommandBase {
     @Override
     public void execute() {
         if (m_direction > 0) {
-            if (!helavatorsubsystem.extendedhelavatorlimitswitchstatus()) {
+            if (!helevatorsubsystem.extendedhelevatorlimitswitchstatus()) {
                 // We are going up and top limit is tripped so stop
-                helavatorsubsystem.setspeedofchainextensionMotor(0);
+                helevatorsubsystem.setspeedofchainextensionMotor(0);
             } else {
                 // We are going up but top limit is not tripped so go at commanded speed
-                helavatorsubsystem.setspeedofchainextensionMotor(m_direction);
+                helevatorsubsystem.setspeedofchainextensionMotor(m_direction);
             }
         } else {
-            if (!helavatorsubsystem.retractedelavatorlimitswitchstatus()) {
+            if (!helevatorsubsystem.retractedelavatorlimitswitchstatus()) {
                 // We are going down and bottom limit is tripped so stop
-                helavatorsubsystem.setspeedofchainextensionMotor(0);
+                helevatorsubsystem.setspeedofchainextensionMotor(0);
             } else {
                 // We are going down but bottom limit is not tripped so go at commanded speed
-                helavatorsubsystem.setspeedofchainextensionMotor(m_direction);
+                helevatorsubsystem.setspeedofchainextensionMotor(m_direction);
             }
         }
     }
     @Override
     public void end(boolean interup){
-        helavatorsubsystem.setspeedofchainextensionMotor(0);
+        helevatorsubsystem.setspeedofchainextensionMotor(0);
     }
 }
