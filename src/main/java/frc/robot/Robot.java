@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.PathPlanner;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,6 +30,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   private final Joystick m_stick = new Joystick(0);
+  private final Joystick m_stickTwo = new Joystick(1);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -45,6 +44,16 @@ public class Robot extends TimedRobot {
     spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
     JoystickButton leftneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 7);
     JoystickButton rightneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 8);
+
+    JoystickButton extendflipperbutton = new JoystickButton(m_stick, 5);
+    JoystickButton retractflipperbutton = new JoystickButton(m_stick, 3);
+
+    JoystickButton extendsliderbutton = new JoystickButton(m_stickTwo, 5);
+    JoystickButton retractsliderbutton = new JoystickButton(m_stickTwo, 3);
+
+    JoystickButton extendvelevatorbutton = new JoystickButton(m_stickTwo, 6);
+    JoystickButton retractvelevatorbutton = new JoystickButton(m_stickTwo, 4);
+
     leftneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(0.1));
     rightneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(-0.1));
     drivetrainsubsystem.ZeroEncoderLeftPOS();
