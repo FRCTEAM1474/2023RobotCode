@@ -48,14 +48,14 @@ public class drivetrainsubsystem extends SubsystemBase {
   }
 
   public static double EncoderLeftPOS() {
-    final double m_encoder1 = m_motor2.getSelectedSensorPosition();
+    final double m_encoder1 = m_motor3.getSelectedSensorPosition();
     
     return m_encoder1;
 
   }
 
   public static double EncoderRightPOS() {
-    final double m_encoder2 = m_motor3.getSelectedSensorPosition();
+    final double m_encoder2 = m_motor1.getSelectedSensorPosition();
     
     return m_encoder2;
   }
