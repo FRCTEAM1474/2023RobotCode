@@ -4,17 +4,22 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DualSparkMaxCommand2;
 import frc.robot.commands.flipperinnieandoutiecommand;
+import frc.robot.commands.grippercommand;
 import frc.robot.commands.helevatorinnieandoutiecommand;
 import frc.robot.commands.neoandlimitswitchtesting;
+import frc.robot.commands.shiftinggearboxescommand;
 import frc.robot.commands.slelavatorinnieandoutiecommand;
 import frc.robot.commands.velevatorEXACTuppieanddowniecommand;
 import frc.robot.commands.velevatoruppieanddowniecommand;
@@ -30,7 +35,7 @@ import frc.robot.Bling;
  * project.
  */
 public class Robot extends TimedRobot {
-  boolean solenoidTrigger = false;
+  //boolean solenoidTrigger = false;
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -48,26 +53,40 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    JoystickButton spinnyButton = new JoystickButton(m_stick, 3);
-    spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
-    JoystickButton leftneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 7);
-    JoystickButton rightneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 8);
+
+    CameraServer.startAutomaticCapture();
+    
+    //JoystickButton spinnyButton = new JoystickButton(m_stick, 3);
+    //spinnyButton.whileTrue(new DualSparkMaxCommand2(1, 1));
+    //JoystickButton leftneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 7);
+    //JoystickButton rightneoandlimitswitchtestingbutton = new JoystickButton(m_stick, 8);
+
+    JoystickButton shiftgears = new JoystickButton(m_stick, 11);
+    JoystickButton grabgamepiece = new JoystickButton(m_stick, 1);
+
+    JoystickButton groundactiongroup = new JoystickButton(m_stickTwo, 11);
+    JoystickButton midactiongroup = new JoystickButton(m_stickTwo, 9);
+    JoystickButton highactiongroup = new JoystickButton(m_stickTwo, 7);
+    JoystickButton substationactiongroup = new JoystickButton(m_stickTwo, 10);
 
     JoystickButton extendflipperbutton = new JoystickButton(m_stick, 5);
     JoystickButton retractflipperbutton = new JoystickButton(m_stick, 3);
 
-    JoystickButton extendsliderbutton = new JoystickButton(m_stickTwo, 5);
-    JoystickButton retractsliderbutton = new JoystickButton(m_stickTwo, 3);
+    JoystickButton extendsliderbutton = new JoystickButton(m_stickTwo, 1);
+    JoystickButton retractsliderbutton = new JoystickButton(m_stickTwo, 2);
 
     JoystickButton extendvelevatorbutton = new JoystickButton(m_stickTwo, 6);
     JoystickButton retractvelevatorbutton = new JoystickButton(m_stickTwo, 4);
 
-    JoystickButton extendhelevatorbutton = new JoystickButton(m_stickTwo, 1);
-    JoystickButton retracthelevatorbutton = new JoystickButton(m_stickTwo, 2);
+    JoystickButton extendhelevatorbutton = new JoystickButton(m_stickTwo, 5);
+    JoystickButton retracthelevatorbutton = new JoystickButton(m_stickTwo, 3);
 
-    JoystickButton movevelevatortobottom = new JoystickButton(m_stickTwo, 7);
+    JoystickButton movevelevatortobottom = new JoystickButton(m_stickTwo, 11);
     JoystickButton movevelevatortomidanddoublesubstation = new JoystickButton(m_stickTwo, 9);
-    JoystickButton movevelevatortohigh = new JoystickButton(m_stickTwo, 11);
+    JoystickButton movevelevatortohigh = new JoystickButton(m_stickTwo, 7);
+
+    shiftgears.onTrue(new shiftinggearboxescommand());
+    grabgamepiece.onTrue(new grippercommand());
 
     extendflipperbutton.whileTrue(new flipperinnieandoutiecommand(-0.1));
     retractflipperbutton.whileTrue(new flipperinnieandoutiecommand(0.1));
@@ -84,11 +103,14 @@ public class Robot extends TimedRobot {
     movevelevatortobottom.whileTrue(new velevatorEXACTuppieanddowniecommand(5)); //should be 0 and not whileTrue
     movevelevatortomidanddoublesubstation.whileTrue(new velevatorEXACTuppieanddowniecommand(44)); //should not be whileTrue
     movevelevatortohigh.whileTrue(new velevatorEXACTuppieanddowniecommand(58)); //should be 63 and not whileTrue
-    
+    //change below to onTrue()
+    /*groundactiongroup.whileTrue(Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1), new velevatorEXACTuppieanddowniecommand(5)));
+    midactiongroup.whileTrue(Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1), new velevatorEXACTuppieanddowniecommand(44)));
+    highactiongroup.whileTrue(Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1), new velevatorEXACTuppieanddowniecommand(58)));
+    substationactiongroup.whileTrue(new velevatorEXACTuppieanddowniecommand(44));*/
 
-
-    leftneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(0.1));
-    rightneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(-0.1));
+    //leftneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(0.1));
+    //rightneoandlimitswitchtestingbutton.whileTrue(new neoandlimitswitchtesting(-0.1));
     drivetrainsubsystem.ZeroEncoderLeftPOS();
     drivetrainsubsystem.ZeroEncoderRightPOS();
 
@@ -167,7 +189,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
     SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());*/
 
-    if (m_stick.getRawButtonPressed(11)){
+    /*if (m_stick.getRawButtonPressed(11)){
       if (!solenoidTrigger){
         solenoidTrigger = true;
       }
@@ -182,7 +204,7 @@ public class Robot extends TimedRobot {
   else {
     ShiftingGearboxesSubsystem.m_solenoidTwo.set(true);
     ShiftingGearboxesSubsystem.m_solenoid.set(false);
-  }
+  }*/
   
   //boolean solenoid = m_stickTwo.toggleWhenPresssed(kSolenoidButton)
   //m_solenoid.set(m_stickTwo.toggleWhenPresssed(kSolenoidButton));
