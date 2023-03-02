@@ -40,7 +40,7 @@ public class Bling extends SubsystemBase {
 
     m_led.start();
     
-    driverController = new Joystick(1);
+    driverController = new Joystick(0);
 
   }
 
@@ -48,15 +48,15 @@ public class Bling extends SubsystemBase {
 
   public void periodic() {
 
-    if (driverController.getRawButtonPressed(8)) {
+    if (driverController.getRawButtonPressed(7)) {
 
         color = 0;
 
-    } else if (driverController.getRawButtonPressed(10)) {
+    } else if (driverController.getRawButtonPressed(4)) {
 
         color = 1;
 
-    } else if (driverController.getRawButton(12)) {
+    } else if (driverController.getRawButton(6)) {
 
         color = 2;
 
