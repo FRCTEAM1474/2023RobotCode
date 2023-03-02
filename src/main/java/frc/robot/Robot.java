@@ -10,15 +10,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+//import edu.wpi.first.wpilibj2.command.Commands;
+//import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DualSparkMaxCommand2;
+//import frc.robot.commands.DualSparkMaxCommand2;
 import frc.robot.commands.flipperinnieandoutiecommand;
 import frc.robot.commands.grippercommand;
 import frc.robot.commands.helevatorinnieandoutiecommand;
-import frc.robot.commands.neoandlimitswitchtesting;
+//import frc.robot.commands.neoandlimitswitchtesting;
 import frc.robot.commands.shiftinggearboxescommand;
 import frc.robot.commands.slelavatorinnieandoutiecommand;
 import frc.robot.commands.velevatorEXACTuppieanddowniecommand;
@@ -26,7 +26,7 @@ import frc.robot.commands.velevatoruppieanddowniecommand;
 //import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.drivetrainsubsystem;
-import frc.robot.subsystems.*;
+//import frc.robot.subsystems.*;
 import frc.robot.Bling;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
