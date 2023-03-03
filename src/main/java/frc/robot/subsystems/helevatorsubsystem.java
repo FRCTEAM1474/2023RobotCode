@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -50,5 +51,10 @@ public class helevatorsubsystem extends SubsystemBase {
     }
     public static boolean retractedsliderlimitswitchstatus() {
         return retractedsliderlimitswitch.get();
+    }
+    public static double flipperencoderposition() {
+        RelativeEncoder flipperencoder = flipperMotor.getEncoder();
+        return flipperencoder.getPosition();
+        // TODO: make sure ALL (not just this one) encoders are in the right direction. i.e. when i say go to pos 25, what direction is pos 25 in? check with rev hardware client
     }
 }

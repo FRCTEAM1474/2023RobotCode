@@ -29,7 +29,7 @@ public class flipperinnieandoutiecommand extends CommandBase {
     @Override
     public void execute() {
         if (m_direction > 0) {
-            if (!helevatorsubsystem.extendedflipperlimitswitchstatus()) {
+            if (!helevatorsubsystem.extendedflipperlimitswitchstatus() || ) {
                 // We are going up and top limit is tripped so stop
                 helevatorsubsystem.setspeedofFlipperMotor(0);
             } else {
