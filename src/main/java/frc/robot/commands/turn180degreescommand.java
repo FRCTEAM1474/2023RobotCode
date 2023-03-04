@@ -5,7 +5,7 @@ import frc.robot.subsystems.autosubsystem;
 
 public class turn180degreescommand extends CommandBase {
     
-    public turn180degreescommand(double direction){
+    public turn180degreescommand(){
         
     }
     @Override

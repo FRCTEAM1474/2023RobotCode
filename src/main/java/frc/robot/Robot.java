@@ -7,13 +7,16 @@ package frc.robot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 //import edu.wpi.first.wpilibj2.command.Commands;
 //import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 //import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.drivedistancecommand;
 //import frc.robot.commands.DualSparkMaxCommand2;
 import frc.robot.commands.flipperinnieandoutiecommand;
 import frc.robot.commands.grippercommand;
@@ -21,6 +24,8 @@ import frc.robot.commands.helevatorinnieandoutiecommand;
 //import frc.robot.commands.neoandlimitswitchtesting;
 import frc.robot.commands.shiftinggearboxescommand;
 import frc.robot.commands.slelavatorinnieandoutiecommand;
+import frc.robot.commands.turn180degreescommand;
+import frc.robot.commands.ungripcommand;
 import frc.robot.commands.velevatorEXACTuppieanddowniecommand;
 import frc.robot.commands.velevatoruppieanddowniecommand;
 //import frc.robot.commands.GoodDualSparkMaxCommand;
@@ -28,6 +33,8 @@ import frc.robot.commands.velevatoruppieanddowniecommand;
 import frc.robot.subsystems.drivetrainsubsystem;
 //import frc.robot.subsystems.*;
 import frc.robot.Bling;
+import frc.robot.commands.ungripcommand;
+import frc.robot.commands.gripcommand;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -44,12 +51,23 @@ public class Robot extends TimedRobot {
   private final Joystick m_stickTwo = new Joystick(1);
 
   public static Bling bling;
+
+  final String kDefaultAuto = "score and back up and turn";
+    final String kCustomAuto = "score and back up and go forward again for charge station";
+    String m_autoSelected;
+    final SendableChooser<String> m_chooser = new SendableChooser<>();
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
+
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.addOption("My Auto", kCustomAuto);
+    SmartDashboard.putData("Auto choices", m_chooser);
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
@@ -158,11 +176,33 @@ public class Robot extends TimedRobot {
     /*if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }*/
-    System.out.println("auto init is running 1");
-    m_robotContainer.getAutonomousCommand().schedule();
-    System.out.println("auto init is running 2");
-  }
 
+    m_autoSelected = m_chooser.getSelected();
+    System.out.println("Auto selected: " + m_autoSelected);
+
+    switch (m_autoSelected) {
+      case kCustomAuto:
+        // Put custom auto code here
+        new gripcommand().andThen(new velevatorEXACTuppieanddowniecommand(58).andThen(new slelavatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(0.1).andThen(new helevatorinnieandoutiecommand(-0.1).andThen(new ungripcommand().andThen(new helevatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(-0.1).andThen(new slelavatorinnieandoutiecommand(-0.1).andThen(new velevatorEXACTuppieanddowniecommand(5).andThen(new drivedistancecommand(-4).andThen(new drivedistancecommand(1.841))))))))))));
+        break;
+      case kDefaultAuto:
+      default:
+        // Put default auto code here
+        new gripcommand().andThen(new velevatorEXACTuppieanddowniecommand(58).andThen(new slelavatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(0.1).andThen(new helevatorinnieandoutiecommand(-0.1).andThen(new ungripcommand().andThen(new helevatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(-0.1).andThen(new slelavatorinnieandoutiecommand(-0.1).andThen(new velevatorEXACTuppieanddowniecommand(5).andThen(new drivedistancecommand(-4.5).andThen(new turn180degreescommand())))))))))));
+        break;
+    }
+    System.out.println("auto init is running 1");
+    //m_robotContainer.getAutonomousCommand().schedule();
+    System.out.println("auto init is running 2");
+    //new velevatorEXACTuppieanddowniecommand(58).andThen(new flipperinnieandoutiecommand(0.1).andThen(new )))
+    /*(Commands.parallel(new gripcommand(), 
+    new helevatorinnieandoutiecommand(-0.1), 
+    new slelavatorinnieandoutiecommand(0.1), 
+    new velevatorEXACTuppieanddowniecommand(58))).andThen(
+      new flipperinnieandoutiecommand(0.1).andThen(
+        new ungripcommand().andThen()))*/
+      // basic thing: new gripcommand().andThen(new velevatorEXACTuppieanddowniecommand(58).andThen(new slelavatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(0.1).andThen(new helevatorinnieandoutiecommand(-0.1).andThen(new ungripcommand().andThen(new helevatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(-0.1).andThen(new slelavatorinnieandoutiecommand(-0.1).andThen(new velevatorEXACTuppieanddowniecommand(5).andThen(new drivedistancecommand(-4.5).andThen(new turn180degreescommand())))))))))));
+  }
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {}
