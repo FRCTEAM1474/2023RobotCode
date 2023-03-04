@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
     final String kCustomAuto = "score and back up and go forward again for charge station";
     final String kNoAuto = "no auto :(";
     final String kBackUp = "just backup";
+    final String kDropGamePiece = "just flip out and drop the gamepiece";
     String m_autoSelected;
     final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -70,6 +71,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     m_chooser.addOption("No Auto", kNoAuto);
     m_chooser.addOption("Backup Auto", kBackUp);
+    m_chooser.addOption("Drop Gamepiece", kDropGamePiece);
     SmartDashboard.putData("Auto choices", m_chooser);
     
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -190,7 +192,6 @@ public class Robot extends TimedRobot {
         new gripcommand().andThen(new velevatorEXACTuppieanddowniecommand(58).andThen(new slelavatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(0.1).andThen(new helevatorinnieandoutiecommand(-0.1).andThen(new ungripcommand().andThen(new helevatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(-0.1).andThen(new slelavatorinnieandoutiecommand(-0.1).andThen(new velevatorEXACTuppieanddowniecommand(5).andThen(new drivedistancecommand(-4).andThen(new drivedistancecommand(1.841))))))))))));
         break;
       case kDefaultAuto:
-      default:
         // Put default auto code here
         new gripcommand().andThen(new velevatorEXACTuppieanddowniecommand(58).andThen(new slelavatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(0.1).andThen(new helevatorinnieandoutiecommand(-0.1).andThen(new ungripcommand().andThen(new helevatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(-0.1).andThen(new slelavatorinnieandoutiecommand(-0.1).andThen(new velevatorEXACTuppieanddowniecommand(5).andThen(new drivedistancecommand(-4.5).andThen(new turn180degreescommand())))))))))));
         break;
@@ -198,8 +199,11 @@ public class Robot extends TimedRobot {
         new drivedistancecommand(-4.5);
         break;
       case kNoAuto:
+      default:
         System.out.println("depressed coder");
       break;
+      case kDropGamePiece:
+        new gripcommand().andThen(new flipperinnieandoutiecommand(0.1).andThen(new ungripcommand()));
     }
     System.out.println("auto init is running 1");
     //m_robotContainer.getAutonomousCommand().schedule();
