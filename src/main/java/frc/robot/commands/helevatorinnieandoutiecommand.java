@@ -37,7 +37,7 @@ public class helevatorinnieandoutiecommand extends CommandBase {
                 helevatorsubsystem.setspeedofchainextensionMotor(m_direction);
             }
         } else {
-            if (!helevatorsubsystem.retractedelavatorlimitswitchstatus()) {
+            if (!helevatorsubsystem.retractedhelavatorlimitswitchstatus()) {
                 // We are going down and bottom limit is tripped so stop
                 helevatorsubsystem.setspeedofchainextensionMotor(0);
             } else {
