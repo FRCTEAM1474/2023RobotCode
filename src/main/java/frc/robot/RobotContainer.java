@@ -5,12 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.OperatorConstants.AutoConstants;
+//import frc.robot.Constants.OperatorConstants.AutoConstants;
 //import frc.robot.commands.Autos;
 //import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 
-import java.util.List;
+/*import java.util.List;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
@@ -23,7 +23,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;*/
 //import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
