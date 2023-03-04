@@ -54,6 +54,8 @@ public class Robot extends TimedRobot {
 
   final String kDefaultAuto = "score and back up and turn";
     final String kCustomAuto = "score and back up and go forward again for charge station";
+    final String kNoAuto = "no auto :(";
+    final String kBackUp = "just backup";
     String m_autoSelected;
     final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -66,6 +68,8 @@ public class Robot extends TimedRobot {
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
+    m_chooser.addOption("No Auto", kNoAuto);
+    m_chooser.addOption("Backup Auto", kBackUp);
     SmartDashboard.putData("Auto choices", m_chooser);
     
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -190,6 +194,12 @@ public class Robot extends TimedRobot {
         // Put default auto code here
         new gripcommand().andThen(new velevatorEXACTuppieanddowniecommand(58).andThen(new slelavatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(0.1).andThen(new helevatorinnieandoutiecommand(-0.1).andThen(new ungripcommand().andThen(new helevatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(-0.1).andThen(new slelavatorinnieandoutiecommand(-0.1).andThen(new velevatorEXACTuppieanddowniecommand(5).andThen(new drivedistancecommand(-4.5).andThen(new turn180degreescommand())))))))))));
         break;
+      case kBackUp:
+        new drivedistancecommand(-4.5);
+        break;
+      case kNoAuto:
+        System.out.println("depressed coder");
+      break;
     }
     System.out.println("auto init is running 1");
     //m_robotContainer.getAutonomousCommand().schedule();
@@ -216,7 +226,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-  } // TODO:Carriage and (helevator out) code limits
+  } // TODO:slider and (helevator out) code limits
 
   /** This function is called periodically during operator control. */
   @Override
