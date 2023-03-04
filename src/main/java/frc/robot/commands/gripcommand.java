@@ -28,13 +28,14 @@ public class gripcommand extends CommandBase {
     public void execute() {
        
             
-          grippersubsystem.m_solenoid.set(true);
-          grippersubsystem.m_solenoidTwo.set(false);
+          //grippersubsystem.m_solenoid.set(true);
+          //grippersubsystem.m_solenoidTwo.set(false);
        
     }
     @Override
     public void end(boolean interup){
-        
+        //grippersubsystem.m_solenoid.set(false);
+        //grippersubsystem.m_solenoidTwo.set(false);
     }
 }
     

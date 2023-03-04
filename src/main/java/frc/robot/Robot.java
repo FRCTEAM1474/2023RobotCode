@@ -5,8 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,9 +31,11 @@ import frc.robot.commands.turn180degreescommand;
 import frc.robot.commands.ungripcommand;
 import frc.robot.commands.velevatorEXACTuppieanddowniecommand;
 import frc.robot.commands.velevatoruppieanddowniecommand;
+import frc.robot.subsystems.ShiftingGearboxesSubsystem;
 //import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.drivetrainsubsystem;
+import frc.robot.subsystems.grippersubsystem;
 //import frc.robot.subsystems.*;
 import frc.robot.Bling;
 import frc.robot.commands.ungripcommand;
@@ -42,7 +47,8 @@ import frc.robot.commands.gripcommand;
  * project.
  */
 public class Robot extends TimedRobot {
-  //boolean solenoidTrigger = false;
+  boolean solenoidTrigger = false;
+  boolean gripperTrigger = false;
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -51,6 +57,8 @@ public class Robot extends TimedRobot {
   private final Joystick m_stickTwo = new Joystick(1);
 
   public static Bling bling;
+
+  public final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
   final String kDefaultAuto = "score and back up and turn";
     final String kCustomAuto = "score and back up and go forward again for charge station";
@@ -67,12 +75,17 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
+
+    //frc.robot.subsystems.ShiftingGearboxesSubsystem.m_solenoid.set(Value.kForward);
+
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     m_chooser.addOption("No Auto", kNoAuto);
     m_chooser.addOption("Backup Auto", kBackUp);
     m_chooser.addOption("Drop Gamepiece", kDropGamePiece);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    compressor.enableDigital();//enableAnalog(60, 120);
     
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -110,10 +123,10 @@ public class Robot extends TimedRobot {
     JoystickButton movevelevatortohigh = new JoystickButton(m_stickTwo, 7);
 
     shiftgears.onTrue(new shiftinggearboxescommand());
-    grabgamepiece.onTrue(new grippercommand());
+    //grabgamepiece.onTrue(new grippercommand());
 
-    extendflipperbutton.whileTrue(new flipperinnieandoutiecommand(-0.1));
-    retractflipperbutton.whileTrue(new flipperinnieandoutiecommand(0.1));
+    extendflipperbutton.onTrue(new flipperinnieandoutiecommand(-0.25));
+    retractflipperbutton.onTrue(new flipperinnieandoutiecommand(0.25));
 
     extendsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(0.1));
     retractsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(-0.1));
@@ -124,9 +137,9 @@ public class Robot extends TimedRobot {
     extendvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(0.1));
     retractvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(-0.1));
 
-    movevelevatortobottom.whileTrue(new velevatorEXACTuppieanddowniecommand(5)); //should be 0 and not whileTrue
+    movevelevatortobottom.whileTrue(new velevatorEXACTuppieanddowniecommand(1)); //should be 0 and not whileTrue was 5
     movevelevatortomidanddoublesubstation.whileTrue(new velevatorEXACTuppieanddowniecommand(44)); //should not be whileTrue
-    movevelevatortohigh.whileTrue(new velevatorEXACTuppieanddowniecommand(58)); //should be 63 and not whileTrue
+    movevelevatortohigh.whileTrue(new velevatorEXACTuppieanddowniecommand(62)); //should be 63 and not whileTrue was 58
     //change below to onTrue()
     /*groundactiongroup.whileTrue(Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1), new velevatorEXACTuppieanddowniecommand(5)));
     midactiongroup.whileTrue(Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1), new velevatorEXACTuppieanddowniecommand(44)));
@@ -196,7 +209,7 @@ public class Robot extends TimedRobot {
         new gripcommand().andThen(new velevatorEXACTuppieanddowniecommand(58).andThen(new slelavatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(0.1).andThen(new helevatorinnieandoutiecommand(-0.1).andThen(new ungripcommand().andThen(new helevatorinnieandoutiecommand(0.1).andThen(new flipperinnieandoutiecommand(-0.1).andThen(new slelavatorinnieandoutiecommand(-0.1).andThen(new velevatorEXACTuppieanddowniecommand(5).andThen(new drivedistancecommand(-4.5).andThen(new turn180degreescommand())))))))))));
         break;
       case kBackUp:
-        new drivedistancecommand(-4.5);
+        new drivedistancecommand(-4.5).andThen(new ungripcommand());
         break;
       case kNoAuto:
       default:
@@ -243,7 +256,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
     SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());*/
 
-    /*if (m_stick.getRawButtonPressed(11)){
+    if (m_stick.getRawButtonPressed(11)){
       if (!solenoidTrigger){
         solenoidTrigger = true;
       }
@@ -254,11 +267,32 @@ public class Robot extends TimedRobot {
   if (solenoidTrigger) {
     ShiftingGearboxesSubsystem.m_solenoid.set(true);
     ShiftingGearboxesSubsystem.m_solenoidTwo.set(false);
+    //ShiftingGearboxesSubsystem.m_solenoid.set(Value.kForward);
   }
   else {
+    //ShiftingGearboxesSubsystem.m_solenoid.set(Value.kReverse);
     ShiftingGearboxesSubsystem.m_solenoidTwo.set(true);
     ShiftingGearboxesSubsystem.m_solenoid.set(false);
-  }*/
+  }
+
+  if (m_stick.getRawButtonPressed(1)){
+    if (!gripperTrigger){
+      gripperTrigger = true;
+    }
+    else {
+      gripperTrigger = false;
+    }
+}
+if (gripperTrigger) {
+  grippersubsystem.m_solenoid.set(true);
+  grippersubsystem.m_solenoidTwo.set(false);
+  //ShiftingGearboxesSubsystem.m_solenoid.set(Value.kForward);
+}
+else {
+  //ShiftingGearboxesSubsystem.m_solenoid.set(Value.kReverse);
+  grippersubsystem.m_solenoidTwo.set(true);
+  grippersubsystem.m_solenoid.set(false);
+}
   
   //boolean solenoid = m_stickTwo.toggleWhenPresssed(kSolenoidButton)
   //m_solenoid.set(m_stickTwo.toggleWhenPresssed(kSolenoidButton));

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ShiftingGearboxesSubsystem extends SubsystemBase {
     public final static Solenoid m_solenoid = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
     public final static Solenoid m_solenoidTwo = new Solenoid(PneumaticsModuleType.CTREPCM, 3);
-
+    //public final static DoubleSolenoid m_solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 3);
   /** Creates a new ExampleSubsystem. */
   public ShiftingGearboxesSubsystem () {
     
