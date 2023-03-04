@@ -125,8 +125,8 @@ public class Robot extends TimedRobot {
     shiftgears.onTrue(new shiftinggearboxescommand());
     //grabgamepiece.onTrue(new grippercommand());
 
-    extendflipperbutton.onTrue(new flipperinnieandoutiecommand(-0.25));
-    retractflipperbutton.onTrue(new flipperinnieandoutiecommand(0.25));
+    extendflipperbutton.whileTrue(new flipperinnieandoutiecommand(-0.25));
+    retractflipperbutton.whileTrue(new flipperinnieandoutiecommand(0.25));
 
     extendsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(0.1));
     retractsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(-0.1));
