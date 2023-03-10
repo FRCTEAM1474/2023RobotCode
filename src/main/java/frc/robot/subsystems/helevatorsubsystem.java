@@ -16,8 +16,10 @@ public class helevatorsubsystem extends SubsystemBase {
 
     static DigitalInput extendedflipperlimitswitch = new DigitalInput(0);
     static DigitalInput retractedflipperlimitswitch = new DigitalInput(1);
+
     static DigitalInput extendedhelevatorlimitswitch = new DigitalInput(2);
     static DigitalInput retractedhelevatorlimitswitch = new DigitalInput(3);
+    
     static DigitalInput extendedsliderlimitswitch = new DigitalInput(4);
     static DigitalInput retractedsliderlimitswitch = new DigitalInput(5);
     public helevatorsubsystem() {

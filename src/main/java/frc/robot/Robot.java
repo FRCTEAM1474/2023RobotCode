@@ -36,6 +36,7 @@ import frc.robot.subsystems.ShiftingGearboxesSubsystem;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
 import frc.robot.subsystems.drivetrainsubsystem;
 import frc.robot.subsystems.grippersubsystem;
+import frc.robot.subsystems.helevatorsubsystem;
 //import frc.robot.subsystems.*;
 import frc.robot.Bling;
 import frc.robot.commands.ungripcommand;
@@ -65,8 +66,12 @@ public class Robot extends TimedRobot {
     final String kNoAuto = "no auto :(";
     final String kBackUp = "just backup";
     final String kDropGamePiece = "just flip out and drop the gamepiece";
+    final String kDropandBackUp = "drop and back up";
+    final String kDropandDoNothing = "drop and do nothing";
     String m_autoSelected;
     final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+    double m_directionofhelevator;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -83,6 +88,8 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("No Auto", kNoAuto);
     m_chooser.addOption("Backup Auto", kBackUp);
     m_chooser.addOption("Drop Gamepiece", kDropGamePiece);
+    m_chooser.addOption("Drop and Backup", kDropandBackUp);
+    m_chooser.addOption("Drop and Do Nothing", kDropandDoNothing);
     SmartDashboard.putData("Auto choices", m_chooser);
 
     compressor.enableDigital();//enableAnalog(60, 120);
@@ -131,8 +138,8 @@ public class Robot extends TimedRobot {
     extendsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(0.1));
     retractsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(-0.1));
 
-    extendhelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(-0.1));
-    retracthelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(0.1));
+    extendhelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(-0.4));
+    retracthelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(0.4));
 
     extendvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(0.1));
     retractvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(-0.1));
@@ -217,6 +224,13 @@ public class Robot extends TimedRobot {
       break;
       case kDropGamePiece:
         new gripcommand().andThen(new flipperinnieandoutiecommand(0.1).andThen(new ungripcommand()));
+      break;
+      case kDropandBackUp:
+        new ungripcommand().andThen(new drivedistancecommand(-4.5));
+      break;
+      case kDropandDoNothing:
+        new ungripcommand();
+      break;
     }
     System.out.println("auto init is running 1");
     //m_robotContainer.getAutonomousCommand().schedule();
@@ -293,6 +307,36 @@ else {
   grippersubsystem.m_solenoidTwo.set(true);
   grippersubsystem.m_solenoid.set(false);
 }
+/*
+if (m_stickTwo.getRawButton(5)) {
+  m_directionofhelevator = 0.1;
+} 
+else if (m_stickTwo.getRawButton(3)) {
+  m_directionofhelevator = -0.1;
+}
+else {
+  m_directionofhelevator = 0;
+}
+
+if (m_directionofhelevator > 0) {
+  if (!helevatorsubsystem.extendedhelevatorlimitswitchstatus()) {
+      // We are going up and top limit is tripped so stop
+      helevatorsubsystem.setspeedofchainextensionMotor(0);
+  } else {
+      // We are going up but top limit is not tripped so go at commanded speed
+      helevatorsubsystem.setspeedofchainextensionMotor(m_directionofhelevator);
+  }
+} else {
+  if (!helevatorsubsystem.retractedhelavatorlimitswitchstatus()) {
+      // We are going down and bottom limit is tripped so stop
+      helevatorsubsystem.setspeedofchainextensionMotor(0);
+  } else {
+      // We are going down but bottom limit is not tripped so go at commanded speed
+      helevatorsubsystem.setspeedofchainextensionMotor(m_directionofhelevator);
+  }
+} */
+
+
   
   //boolean solenoid = m_stickTwo.toggleWhenPresssed(kSolenoidButton)
   //m_solenoid.set(m_stickTwo.toggleWhenPresssed(kSolenoidButton));

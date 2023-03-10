@@ -29,7 +29,7 @@ public class velevatoruppieanddowniecommand extends CommandBase {
     @Override
     public void execute() {
         if (m_direction > 0) {
-            if (!velevatorsubsystem.extendedvelevatorlimitswitchstatus() || velevatorsubsystem.velevatorencoderposition() > 62 ) {
+            if (velevatorsubsystem.extendedvelevatorlimitswitchstatus() || velevatorsubsystem.velevatorencoderposition() > 62 ) {
                 // We are going up and top limit is tripped so stop
                 velevatorsubsystem.setspeedofVelevatorMotors(0);
             } else {
