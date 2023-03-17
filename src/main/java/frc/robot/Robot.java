@@ -32,7 +32,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.flipperinnieandoutiecommand;
 import frc.robot.commands.helevatorinnieandoutiecommand;
-//import frc.robot.commands.shiftinggearboxescommand;
 import frc.robot.commands.slelavatorinnieandoutiecommand;
 import frc.robot.commands.velevatorEXACTuppieanddowniecommand;
 import frc.robot.commands.velevatoruppieanddowniecommand;
@@ -156,9 +155,6 @@ public class Robot extends TimedRobot {
     JoystickButton movevelevatortobottom = new JoystickButton(m_stickTwo, 11);
     JoystickButton movevelevatortomidanddoublesubstation = new JoystickButton(m_stickTwo, 9);
     JoystickButton movevelevatortohigh = new JoystickButton(m_stickTwo, 7);
-
-    //shiftgears.onTrue(new shiftinggearboxescommand());
-    //grabgamepiece.onTrue(new grippercommand());
 
     extendflipperbutton.whileTrue(new flipperinnieandoutiecommand(-0.25));
     retractflipperbutton.whileTrue(new flipperinnieandoutiecommand(0.25));
