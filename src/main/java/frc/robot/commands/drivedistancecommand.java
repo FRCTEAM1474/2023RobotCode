@@ -13,18 +13,6 @@ public class drivedistancecommand extends CommandBase {
     public void initialize() {
 
         drivetrainsubsystem.m_robotDrive.setSafetyEnabled(false);
-        /*if (!testlimitswitchessubsystem.leftlimitswitchstatus()) {
-            isleftpressed = false;
-        }
-        if (!testlimitswitchessubsystem.rightlimitswitchstatus()) {
-            isrightpressed = false;
-        }
-        if (testlimitswitchessubsystem.leftlimitswitchstatus()) {
-            isleftpressed = true;
-        }
-        if (testlimitswitchessubsystem.rightlimitswitchstatus()) {
-            isrightpressed = true;
-        }*/
         
         }
         
@@ -39,36 +27,6 @@ public class drivedistancecommand extends CommandBase {
 
         drivetrainsubsystem.m_robotDrive.setSafetyEnabled(false);
 
-        /*drivetrainsubsystem.m_robotDrive.setSafetyEnabled(false);
-
-        double currentm_motorRightEncoderPosition = drivetrainsubsystem.EncoderRightPOSinmeters();
-
-          double currentm_motorLeftEncoderPosition = drivetrainsubsystem.EncoderLeftPOSinmeters();
-
-          System.out.println("MotorRightOutput " + currentm_motorRightEncoderPosition);
-
-          System.out.println("MotorLeftOutput " + currentm_motorLeftEncoderPosition);
-
-          double currentEncoderDelta = currentm_motorRightEncoderPosition - (currentm_motorLeftEncoderPosition);
-
-          double autonomousDrivetrainRotation = (((currentEncoderDelta) / 4000));
-
-          //System.out.println("autonomousDrivetrainRotation " + autonomousDrivetrainRotation);
-          if (distancetodrive < 0) {
-        if (currentm_motorLeftEncoderPosition > distancetodrive && currentm_motorRightEncoderPosition > distancetodrive){
-            drivetrainsubsystem.m_robotDrive.arcadeDrive(-0.20, -autonomousDrivetrainRotation, true); //change value to 0.65 later
-        }
-    }
-    if (distancetodrive > 0 ) {
-        if (currentm_motorLeftEncoderPosition < distancetodrive && currentm_motorRightEncoderPosition < distancetodrive){
-            drivetrainsubsystem.m_robotDrive.arcadeDrive(0.20, -autonomousDrivetrainRotation, true); //change value to 0.65 later
-        }
-    }
-          previousEncoderDelta = currentEncoderDelta;
-
-          //IntakeSubsystem.setSpeed(-1);
-
-        */
         drivetrainsubsystem.m_robotDrive.arcadeDrive(-0.1, 0);
         
     }

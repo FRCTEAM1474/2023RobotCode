@@ -28,24 +28,6 @@ public class velevatorEXACTuppieanddowniecommand extends CommandBase {
         bottomlimitswitchstatus = velevatorsubsystem.retractedvelevatorlimitswitchstatus();
         toplimitswitchstatus = velevatorsubsystem.extendedvelevatorlimitswitchstatus();
 
-
-        /*if (m_direction > 0) {
-            if (!velevatorsubsystem.extendedvelevatorlimitswitchstatus()) {
-                // We are going up and top limit is tripped so stop
-                velevatorsubsystem.setspeedofVelevatorMotors(0);
-            } else {
-                // We are going up but top limit is not tripped so go at commanded speed
-                velevatorsubsystem.setspeedofVelevatorMotors(m_direction);
-            }
-        } else {
-            if (!velevatorsubsystem.retractedvelevatorlimitswitchstatus()) {
-                // We are going down and bottom limit is tripped so stop
-                velevatorsubsystem.setspeedofVelevatorMotors(0);
-            } else {
-                // We are going down but bottom limit is not tripped so go at commanded speed
-                velevatorsubsystem.setspeedofVelevatorMotors(m_direction);
-            }
-        } */
         if (currentposition < positiontogoto) {
             if (!toplimitswitchstatus) {
                 if (currentposition != positiontogoto) {
