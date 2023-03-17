@@ -35,7 +35,7 @@ public class slelavatorinnieandoutiecommand extends CommandBase {
             } else {
                 // We are going up but top limit is not tripped so go at commanded speed
                 //helevatorsubsystem.setspeedofsliderMotor(m_direction);
-                helevatorsubsystem.setspeedofsliderMotor(0);
+                helevatorsubsystem.setspeedofsliderMotor(m_direction);
             }
         } else {
             if (!helevatorsubsystem.retractedsliderlimitswitchstatus()) {
@@ -44,7 +44,7 @@ public class slelavatorinnieandoutiecommand extends CommandBase {
             } else {
                 // We are going down but bottom limit is not tripped so go at commanded speed
                 //helevatorsubsystem.setspeedofsliderMotor(m_direction);
-                helevatorsubsystem.setspeedofsliderMotor(0);
+                helevatorsubsystem.setspeedofsliderMotor(m_direction);
             }
         }
     }

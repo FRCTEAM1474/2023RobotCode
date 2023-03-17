@@ -4,8 +4,17 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -32,6 +41,8 @@ import frc.robot.commands.turn180degreescommand;
 import frc.robot.commands.ungripcommand;
 import frc.robot.commands.velevatorEXACTuppieanddowniecommand;
 import frc.robot.commands.velevatoruppieanddowniecommand;
+import frc.robot.commands.autos.TestPath;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShiftingGearboxesSubsystem;
 //import frc.robot.commands.GoodDualSparkMaxCommand;
 //import frc.robot.commands.GetEncoderOutputFromSparkmaxesCommand;
@@ -49,6 +60,14 @@ import frc.robot.commands.gripcommand;
  * project.
  */
 public class Robot extends TimedRobot {
+
+  public static Drivetrain drivetrain = new Drivetrain();
+
+  public static Trajectory Trajectory1 = new Trajectory();
+  public static Trajectory Trajectory2 = new Trajectory();
+  public static Trajectory Trajectory3 = new Trajectory();
+  public static Trajectory StraightTestTrajectory = new Trajectory();
+
   boolean solenoidTrigger = false;
   boolean gripperTrigger = false;
   private Command m_autonomousCommand;
@@ -80,6 +99,29 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    String trajectory1JSON = "paths//phase1.wpilib.json";
+    String trajectory2JSON = "paths//phase2.wpilib.json";
+    String trajectory3JSON = "paths//phase3.wpilib.json";
+    String trajectorytestJSON = "paths//straightmaybe.wpilib.json";
+ 
+    try {
+      Path testPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
+      Path testPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
+      Path testPath3 = Filesystem.getDeployDirectory().toPath().resolve(trajectory3JSON);
+      Path straighttestpath = Filesystem.getDeployDirectory().toPath().resolve(trajectorytestJSON);
+
+      Trajectory1 = TrajectoryUtil.fromPathweaverJson(testPath1);
+      Trajectory2 = TrajectoryUtil.fromPathweaverJson(testPath2);
+      Trajectory3 = TrajectoryUtil.fromPathweaverJson(testPath3);
+      StraightTestTrajectory = TrajectoryUtil.fromPathweaverJson(straighttestpath);
+    }
+
+    catch (IOException ex) {
+      DriverStation.reportError("Unable to open Trajectory", ex.getStackTrace());
+    } 
+
+    drivetrain.zeroOdometry();
 
 
     //frc.robot.subsystems.ShiftingGearboxesSubsystem.m_solenoid.set(Value.kForward);
@@ -198,15 +240,21 @@ public class Robot extends TimedRobot {
    * @return 
    * @return */
   @Override
-  public SequentialCommandGroup autonomousInit() {
+  public void autonomousInit() {
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
+
+    m_autonomousCommand = new TestPath(StraightTestTrajectory);
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
 
     // schedule the autonomous command (example)
-    /*if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }*/
+    //if (m_autonomousCommand != null) {
+    //  m_autonomousCommand.schedule();
+    //}
 
-    m_autoSelected = m_chooser.getSelected();
+    /*m_autoSelected = m_chooser.getSelected();
     System.out.println("Auto selected: " + m_autoSelected);
 
     switch (m_autoSelected) {
@@ -236,7 +284,7 @@ public class Robot extends TimedRobot {
         //this doesn't do anything, it just drops it because the compresser
         //builds pressure and "open" is the default state of the gripper
       break;
-    }
+    }*/
     System.out.println("auto init is running 1");
     //m_robotContainer.getAutonomousCommand().schedule();
     System.out.println("auto init is running 2");

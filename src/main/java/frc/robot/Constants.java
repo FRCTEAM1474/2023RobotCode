@@ -19,6 +19,13 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
   public static class OperatorConstants {
+
+    public enum DriveMode {
+      Normal, Limelight, Scoring
+  }
+
+    public static double metersPerEncoderTick = 00.00011688933603688586170451827431929;
+
     public static final int kDriverControllerPort = 0;
     public static final int kDriverControllerPort2 = 1;
     public static final MotorType kMotorType = MotorType.kBrushless;
@@ -45,10 +52,17 @@ public final class Constants {
       public static final double kMaxSpeedMetersPerSecond = 6.706;
       public static final double kMaxAccelerationMetersPerSecondSquared = 1;
   
+      public static final DifferentialDriveKinematics kDriveKinematics =
+        new DifferentialDriveKinematics(0.5715);
+
+    }
+
       // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
       public static final double kRamseteB = 2;
       public static final double kRamseteZeta = 0.7;
+
+
     }
     
   }
-}
+
