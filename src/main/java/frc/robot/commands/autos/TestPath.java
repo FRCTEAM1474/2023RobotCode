@@ -86,5 +86,6 @@ public class TestPath extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands( this.getAutoCommand(trajectory) );
+    System.out.println("added the auto command from testpath");
   }
 }

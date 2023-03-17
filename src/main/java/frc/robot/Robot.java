@@ -241,13 +241,18 @@ public class Robot extends TimedRobot {
    * @return */
   @Override
   public void autonomousInit() {
+
+    System.out.println("autonomousinit1");
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
 
     m_autonomousCommand = new TestPath(StraightTestTrajectory);
     if (m_autonomousCommand != null) {
+      System.out.println("before scheduling autonomous command");
       m_autonomousCommand.schedule();
+      System.out.println("after scheduling autonomous command");
     }
+    System.out.println("autonomousinit2");
 
     // schedule the autonomous command (example)
     //if (m_autonomousCommand != null) {
