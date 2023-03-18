@@ -43,6 +43,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShiftingGearboxesSubsystem;
 import frc.robot.subsystems.drivetrainsubsystem;
 import frc.robot.subsystems.grippersubsystem;
+import frc.robot.subsystems.blinkinsubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -54,9 +55,9 @@ public class Robot extends TimedRobot {
 
   public static Drivetrain drivetrain = new Drivetrain();
 
-  public static Trajectory Trajectory1 = new Trajectory();
-  public static Trajectory Trajectory2 = new Trajectory();
-  public static Trajectory Trajectory3 = new Trajectory();
+  //public static Trajectory Trajectory1 = new Trajectory();
+  //public static Trajectory Trajectory2 = new Trajectory();
+  //public static Trajectory Trajectory3 = new Trajectory();
   public static Trajectory StraightTestTrajectory = new Trajectory();
 
   boolean solenoidTrigger = false;
@@ -92,20 +93,20 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
-    String trajectory1JSON = "paths//phase1.wpilib.json";
-    String trajectory2JSON = "paths//phase2.wpilib.json";
-    String trajectory3JSON = "paths//phase3.wpilib.json";
-    String trajectorytestJSON = "paths/straightmaybe.wpilib.json";
+    //String trajectory1JSON = "paths//phase1.wpilib.json";
+    //String trajectory2JSON = "paths//phase2.wpilib.json";
+    //String trajectory3JSON = "paths//phase3.wpilib.json";
+    String trajectorytestJSON = "paths//Unnamed.wpilib.json";
  
     try {
-      Path testPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
-      Path testPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
-      Path testPath3 = Filesystem.getDeployDirectory().toPath().resolve(trajectory3JSON);
+      //Path testPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
+      //Path testPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
+      //Path testPath3 = Filesystem.getDeployDirectory().toPath().resolve(trajectory3JSON);
       Path straighttestpath = Filesystem.getDeployDirectory().toPath().resolve(trajectorytestJSON);
 
-      Trajectory1 = TrajectoryUtil.fromPathweaverJson(testPath1);
-      Trajectory2 = TrajectoryUtil.fromPathweaverJson(testPath2);
-      Trajectory3 = TrajectoryUtil.fromPathweaverJson(testPath3);
+      //Trajectory1 = TrajectoryUtil.fromPathweaverJson(testPath1);
+      //Trajectory2 = TrajectoryUtil.fromPathweaverJson(testPath2);
+      //Trajectory3 = TrajectoryUtil.fromPathweaverJson(testPath3);
       StraightTestTrajectory = TrajectoryUtil.fromPathweaverJson(straighttestpath);
     }
 
@@ -220,16 +221,16 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    System.out.println("autonomousinit1");
+    //System.out.println("autonomousinit1");
     Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
 
     m_autonomousCommand = new TestPath(StraightTestTrajectory);
     if (m_autonomousCommand != null) {
-      System.out.println("before scheduling autonomous command");
+      //System.out.println("before scheduling autonomous command");
       m_autonomousCommand.schedule();
-      System.out.println("after scheduling autonomous command");
+      //System.out.println("after scheduling autonomous command");
     }
-    System.out.println("autonomousinit2");
+    //System.out.println("autonomousinit2");
   }
   /** This function is called periodically during autonomous. */
   @Override
@@ -237,6 +238,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    blinkinsubsystem.setSpeed("Rainbow");
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -249,7 +251,17 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    drivetrainsubsystem.m_robotDrive.feed();
+
+    if (m_stick.getRawButton(8)) {
+      blinkinsubsystem.setSpeed("Yellow");
+    }
+    if (m_stick.getRawButton(10)) {
+      blinkinsubsystem.setSpeed("Violet");
+    }
+    if (m_stick.getRawButton(12)) {
+      blinkinsubsystem.setSpeed("Rainbow");
+    }
+    //drivetrainsubsystem.m_robotDrive.feed();
     drivetrainsubsystem.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
 
     /* Victor added 

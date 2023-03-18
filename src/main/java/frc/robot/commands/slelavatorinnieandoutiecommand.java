@@ -17,7 +17,7 @@ public class slelavatorinnieandoutiecommand extends CommandBase {
     @Override
     public void execute() {
         if (m_direction > 0) {
-            if (!helevatorsubsystem.extendedsliderlimitswitchstatus()) {
+            if (helevatorsubsystem.extendedsliderlimitswitchstatus()) {
                 // We are going up and top limit is tripped so stop
                 helevatorsubsystem.setspeedofsliderMotor(0);
             } else {

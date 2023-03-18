@@ -26,7 +26,7 @@ public class turn180degreescommand extends CommandBase {
 
             drivetrainsubsystem.m_robotDrive.arcadeDrive(0.05, 0.65);
 
-            System.out.println("firstprint");
+            //System.out.println("firstprint");
 
           }
 
@@ -35,7 +35,7 @@ public class turn180degreescommand extends CommandBase {
 
               drivetrainsubsystem.m_robotDrive.tankDrive(0.65, 0);
 
-              System.out.println("secondprint");
+              //System.out.println("secondprint");
 
           }
 
@@ -43,21 +43,21 @@ public class turn180degreescommand extends CommandBase {
 
               drivetrainsubsystem.m_robotDrive.tankDrive(0, 0.65);         
 
-              System.out.println("thirdprint");
+              //System.out.println("thirdprint");
 
           }
 
           else {
 
-            System.out.println("STOPPING");
+            //System.out.println("STOPPING");
 
             drivetrainsubsystem.m_robotDrive.arcadeDrive(0, 0);
 
           }
 
-          System.out.println(currentm_motorLeftEncoderPosition);
+          //System.out.println(currentm_motorLeftEncoderPosition);
 
-          System.out.println(currentm_motorRightEncoderPosition);
+          //System.out.println(currentm_motorRightEncoderPosition);
         
     }
     @Override
