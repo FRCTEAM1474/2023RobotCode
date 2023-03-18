@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
     String trajectory1JSON = "paths//phase1.wpilib.json";
     String trajectory2JSON = "paths//phase2.wpilib.json";
     String trajectory3JSON = "paths//phase3.wpilib.json";
-    String trajectorytestJSON = "paths//straightmaybe.wpilib.json";
+    String trajectorytestJSON = "paths/straightmaybe.wpilib.json";
  
     try {
       Path testPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
@@ -230,10 +230,6 @@ public class Robot extends TimedRobot {
       System.out.println("after scheduling autonomous command");
     }
     System.out.println("autonomousinit2");
-
-    System.out.println("auto init is running 1");
-   
-    System.out.println("auto init is running 2");
   }
   /** This function is called periodically during autonomous. */
   @Override

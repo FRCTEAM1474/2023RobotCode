@@ -42,8 +42,8 @@ public class drivetrainsubsystem extends SubsystemBase {
   }
 
   public static void setRobotDrive(double speed, double rotation){
+    m_robotDrive.setSafetyEnabled(false);
     m_robotDrive.arcadeDrive(speed, rotation);
-    
     
   }
 
