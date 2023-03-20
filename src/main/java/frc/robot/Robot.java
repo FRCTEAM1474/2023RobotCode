@@ -93,6 +93,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
+    blinkinsubsystem.setSpeed("Rainbow");
+
     //String trajectory1JSON = "paths//phase1.wpilib.json";
     //String trajectory2JSON = "paths//phase2.wpilib.json";
     //String trajectory3JSON = "paths//phase3.wpilib.json";

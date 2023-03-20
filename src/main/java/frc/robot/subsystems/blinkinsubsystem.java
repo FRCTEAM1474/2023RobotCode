@@ -24,9 +24,7 @@ public class blinkinsubsystem extends SubsystemBase {
         if (pattern == "Rainbow") {
             m_blinkinMax.set(-0.97);
         }
-        else {
-            m_blinkinMax.set(0.99);
-        }
+        
 
         
     }
