@@ -17,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -25,8 +25,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
+//import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+//import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants.DriveMode;
 //import frc.robot.commands.BobDrive;
@@ -37,11 +38,15 @@ public class Drivetrain extends SubsystemBase {
   private DriveMode drivemode = Constants.OperatorConstants.DriveMode.Normal;
 
   // Motors
-  public WPI_TalonSRX leftLead = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorOne);
-  public WPI_TalonSRX leftFollow1 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorTwo);
+  public  WPI_TalonSRX leftLead = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorOne);
+  public  WPI_TalonSRX leftFollow1 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorTwo);
 
-  public WPI_TalonSRX rightLead = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorThree);
-  public WPI_TalonSRX rightFollow1 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorFour);
+  public  WPI_TalonSRX rightLead = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorThree);
+  public  WPI_TalonSRX rightFollow1 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorFour);
+
+  public  MotorControllerGroup m_leftControllerGroup = new MotorControllerGroup(leftLead, leftFollow1);
+  public  MotorControllerGroup m_rightControllerGroup = new MotorControllerGroup(rightLead, rightFollow1);
+  public DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftControllerGroup, m_rightControllerGroup);
 
   //public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
   public AHRS gyro = new AHRS(SPI.Port.kMXP);

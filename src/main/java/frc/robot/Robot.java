@@ -41,7 +41,7 @@ import frc.robot.commands.autos.TestPath;
 
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShiftingGearboxesSubsystem;
-import frc.robot.subsystems.drivetrainsubsystem;
+//import frc.robot.subsystems.drivetrainsubsystem;
 import frc.robot.subsystems.grippersubsystem;
 import frc.robot.subsystems.blinkinsubsystem;
 
@@ -180,8 +180,8 @@ public class Robot extends TimedRobot {
     highactiongroup.whileTrue(Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1), new velevatorEXACTuppieanddowniecommand(58)));
     substationactiongroup.whileTrue(new velevatorEXACTuppieanddowniecommand(44));*/
 
-    drivetrainsubsystem.ZeroEncoderLeftPOS();
-    drivetrainsubsystem.ZeroEncoderRightPOS();
+    //drivetrainsubsystem.ZeroEncoderLeftPOS();
+    //drivetrainsubsystem.ZeroEncoderRightPOS();
 
     bling = new Bling();
     
@@ -206,8 +206,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
     SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());
     */
-    SmartDashboard.putNumber("encoderleft", drivetrainsubsystem.EncoderLeftPOS());
-    SmartDashboard.putNumber("encoderright", drivetrainsubsystem.EncoderRightPOS());
+    //SmartDashboard.putNumber("encoderleft", drivetrainsubsystem.EncoderLeftPOS());
+    //SmartDashboard.putNumber("encoderright", drivetrainsubsystem.EncoderRightPOS());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -264,8 +264,8 @@ public class Robot extends TimedRobot {
       blinkinsubsystem.setSpeed("Rainbow");
     }
     //drivetrainsubsystem.m_robotDrive.feed();
-    drivetrainsubsystem.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
-
+    //drivetrainsubsystem.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
+    drivetrain.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
     /* Victor added 
         SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
     SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());*/
