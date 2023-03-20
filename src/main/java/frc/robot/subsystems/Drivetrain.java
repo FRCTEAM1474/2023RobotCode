@@ -15,6 +15,8 @@ import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -41,7 +43,8 @@ public class Drivetrain extends SubsystemBase {
   public WPI_TalonSRX rightLead = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorThree);
   public WPI_TalonSRX rightFollow1 = new WPI_TalonSRX(Constants.OperatorConstants.kCANIDforMotorFour);
 
-  public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+  //public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+  public AHRS gyro = new AHRS(SPI.Port.kMXP);
 
   private DifferentialDriveOdometry odometry;
   Rotation2d heading = new Rotation2d(Units.degreesToRadians(gyro.getAngle()));
