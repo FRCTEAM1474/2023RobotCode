@@ -26,7 +26,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.util.Units;
 //import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-//import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants.DriveMode;
@@ -179,29 +179,35 @@ public class Drivetrain extends SubsystemBase {
 
   // Get left and right lead driving distance in meters
   public double getLeftLeadDriveDistanceMeters() {
-    return this.leftLead.getSelectedSensorPosition() * Constants.OperatorConstants.metersPerEncoderTick;
+    return 3*(this.leftLead.getSelectedSensorPosition() * Constants.OperatorConstants.metersPerEncoderTick);
   }
 
   public double getRightLeadDriveDistanceMeters() {
-    return this.rightLead.getSelectedSensorPosition() * Constants.OperatorConstants.metersPerEncoderTick;
+    return 3*(this.rightLead.getSelectedSensorPosition() * Constants.OperatorConstants.metersPerEncoderTick);
   }
 
   // Get left lead and right lead driving distance in tick
   public double getLeftLeadDriveDistanceTicks() {
-    return this.leftLead.getSelectedSensorPosition();
+    return -(this.leftLead.getSelectedSensorPosition());
   }
 
   public double getRightLeadDriveDistanceTicks() {
     return this.rightLead.getSelectedSensorPosition();
   }
 
+  private Rotation2d getinvertedrotation2d() {
+    return Rotation2d.fromDegrees(gyro.getAngle());
+
+
+  }
+
   public Rotation2d getHeading() {
-    heading = Rotation2d.fromDegrees(MathUtil.inputModulus(gyro.getRotation2d().getDegrees(), -180, 180));
-    return heading;
+    heading = Rotation2d.fromDegrees(MathUtil.inputModulus((getinvertedrotation2d()).getDegrees(), -180, 180));
+    return (heading);
   }
 
   public double getHeadingDegrees() {
-    return MathUtil.inputModulus(gyro.getRotation2d().getDegrees(), -180, 180);
+    return (MathUtil.inputModulus((getinvertedrotation2d()).getDegrees(), -180, 180));
   }
 
   public void resetHeading() {

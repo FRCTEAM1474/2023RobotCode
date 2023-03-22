@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
   //public static Trajectory Trajectory1 = new Trajectory();
   //public static Trajectory Trajectory2 = new Trajectory();
   //public static Trajectory Trajectory3 = new Trajectory();
-  public static Trajectory StraightTestTrajectory = new Trajectory();
+  public static Trajectory CurvedTestTrajectory = new Trajectory();
 
   boolean solenoidTrigger = false;
   boolean gripperTrigger = false;
@@ -104,12 +104,12 @@ public class Robot extends TimedRobot {
       //Path testPath1 = Filesystem.getDeployDirectory().toPath().resolve(trajectory1JSON);
       //Path testPath2 = Filesystem.getDeployDirectory().toPath().resolve(trajectory2JSON);
       //Path testPath3 = Filesystem.getDeployDirectory().toPath().resolve(trajectory3JSON);
-      Path straighttestpath = Filesystem.getDeployDirectory().toPath().resolve(trajectorytestJSON);
+      Path curvytestpath = Filesystem.getDeployDirectory().toPath().resolve(trajectorytestJSON);
 
       //Trajectory1 = TrajectoryUtil.fromPathweaverJson(testPath1);
       //Trajectory2 = TrajectoryUtil.fromPathweaverJson(testPath2);
       //Trajectory3 = TrajectoryUtil.fromPathweaverJson(testPath3);
-      StraightTestTrajectory = TrajectoryUtil.fromPathweaverJson(straighttestpath);
+      CurvedTestTrajectory = TrajectoryUtil.fromPathweaverJson(curvytestpath);
     }
 
     catch (IOException ex) {
@@ -197,6 +197,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("encoderleft", drivetrain.getLeftLeadDriveDistanceMeters());
+    SmartDashboard.putNumber("encoderright", drivetrain.getRightLeadDriveDistanceMeters());
+    SmartDashboard.putNumber("gyro heading", drivetrain.getHeadingDegrees());
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -226,9 +229,11 @@ public class Robot extends TimedRobot {
     //System.out.println("autonomousinit1");
     Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
 
-    m_autonomousCommand = new TestPath(StraightTestTrajectory);
+    m_autonomousCommand = new TestPath(CurvedTestTrajectory);
     if (m_autonomousCommand != null) {
       //System.out.println("before scheduling autonomous command");
+      drivetrain.zeroOdometry();
+      
       m_autonomousCommand.schedule();
       //System.out.println("after scheduling autonomous command");
     }
@@ -240,6 +245,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    drivetrain.zeroOdometry();
     blinkinsubsystem.setSpeed("Rainbow");
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
@@ -265,7 +271,8 @@ public class Robot extends TimedRobot {
     }
     //drivetrainsubsystem.m_robotDrive.feed();
     //drivetrainsubsystem.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
-    drivetrain.m_robotDrive.arcadeDrive(m_stick.getX(), m_stick.getY());
+    drivetrain.m_robotDrive.arcadeDrive(-m_stick.getY(), -m_stick.getX());
+    
     /* Victor added 
         SmartDashboard.putNumber("encoderleft", DualSparkMaxSubsystem2.m_encoder1.getPosition());
     SmartDashboard.putNumber("encoderright", DualSparkMaxSubsystem2.m_encoder2.getPosition());*/
