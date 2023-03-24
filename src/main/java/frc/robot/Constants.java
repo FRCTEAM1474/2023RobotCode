@@ -26,6 +26,10 @@ public final class Constants {
 
     public static double topposition;
 
+    public static double shelevatorrestriction;
+
+    //0 is all the time, 1 is just auto extension, 2 is just auto retraction
+
     public static double metersPerEncoderTick = 00.00011688933603688586170451827431929;
 
     public static final int kDriverControllerPort = 0;

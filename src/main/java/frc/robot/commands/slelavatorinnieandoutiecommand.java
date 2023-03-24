@@ -9,6 +9,7 @@ public class slelavatorinnieandoutiecommand extends CommandBase {
     public slelavatorinnieandoutiecommand(double direction){
         m_direction = direction;
     }
+    double autolimits;
     @Override
     public void initialize() {
         
@@ -16,16 +17,19 @@ public class slelavatorinnieandoutiecommand extends CommandBase {
 
     @Override
     public void execute() {
+
+        autolimits = frc.robot.Constants.OperatorConstants.shelevatorrestriction;
+
         if (m_direction > 0) {
             if (helevatorsubsystem.extendedsliderlimitswitchstatus()) {
                 // We are going up and top limit is tripped so stop
                 helevatorsubsystem.setspeedofsliderMotor(0);
-            } else {
+            } else if (autolimits == 1 || autolimits == 0){
                 // We are going up but top limit is not tripped so go at commanded speed
                 //helevatorsubsystem.setspeedofsliderMotor(m_direction);
                 helevatorsubsystem.setspeedofsliderMotor(m_direction);
             }
-        } else {
+        } else if (autolimits == 2 || autolimits == 0){
             if (!helevatorsubsystem.retractedsliderlimitswitchstatus()) {
                 // We are going down and bottom limit is tripped so stop
                 helevatorsubsystem.setspeedofsliderMotor(0);

@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 //import commands
@@ -242,6 +243,9 @@ public class Robot extends TimedRobot {
 
     frc.robot.Constants.OperatorConstants.topposition = 107;
 
+    //new ParallelCommandGroup(null)
+    
+
     //System.out.println("autonomousinit1");
     /*Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
 
@@ -268,17 +272,24 @@ public class Robot extends TimedRobot {
       
     }
     if (timedifference > 1 && timedifference < 4) {
+      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
       new velevatoruppieanddowniecommand(0.4).schedule();
     }
     if (timedifference > 3 && timedifference < 6) {
-      
+      //ParallelCommandGroup shelevator = new ParallelCommandGroup(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6));
+      //frc.robot.Robot.autonomousPeriodic.shelevator
+      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
       Commands.parallel(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6)).schedule();
     }
     if (timedifference > 6 && timedifference < 6.25) {
       grippersubsystem.m_solenoid.set(true);
       grippersubsystem.m_solenoidTwo.set(false);
+
+      
+    
     }
     if (timedifference > 6.5 && timedifference < 9) {
+      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
       Commands.parallel(new helevatorinnieandoutiecommand(-0.6), new slelavatorinnieandoutiecommand(-0.6)).schedule();
       //grippersubsystem.m_solenoid.set(true);
       //grippersubsystem.m_solenoidTwo.set(false);
@@ -289,18 +300,20 @@ public class Robot extends TimedRobot {
       grippersubsystem.m_solenoidTwo.set(true);
     }
     if (timedifference > 9 && timedifference < 12) {
+      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
       //new flipperinnieandoutiecommand(0.25);
       //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
       new velevatoruppieanddowniecommand(-0.4).schedule();
     }
     if (timedifference > 12 && timedifference < 15) {
       //drivetrain.m_robotDrive.arcadeDrive(-0.6, 0);
-      drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
+      //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
     }
   }
 
   @Override
   public void teleopInit() {
+    frc.robot.Constants.OperatorConstants.shelevatorrestriction = 0;
     drivetrain.zeroOdometry();
     blinkinsubsystem.setSpeed("Rainbow");
     // This makes sure that the autonomous stops running when
