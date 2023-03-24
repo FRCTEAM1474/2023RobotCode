@@ -4,11 +4,15 @@ import frc.robot.subsystems.velevatorsubsystem;
 
 public class velevatoruppieanddowniecommand extends CommandBase {
     double m_direction;
+    
     boolean isrightpressed; 
     boolean isleftpressed;
     public velevatoruppieanddowniecommand(double direction){
         m_direction = direction;
+        //m_topposition = topposition;
     }
+    
+
     @Override
     public void initialize() {
         
@@ -16,11 +20,14 @@ public class velevatoruppieanddowniecommand extends CommandBase {
 
     @Override
     public void execute() {
+
+        double m_topposition = frc.robot.Constants.OperatorConstants.topposition;
+
         if (m_direction > 0) {
-            if (!velevatorsubsystem.extendedvelevatorlimitswitchstatus() || velevatorsubsystem.velevatorencoderposition() > 62 ) {
+            if (!velevatorsubsystem.extendedvelevatorlimitswitchstatus() || velevatorsubsystem.velevatorencoderposition() > m_topposition ) {
                 // We are going up and top limit is tripped so stop
                 velevatorsubsystem.setspeedofVelevatorMotors(0);
-            } else {//yassssssssssss
+            } else {
                 // We are going up but top limit is not tripped so go at commanded speed
                 velevatorsubsystem.setspeedofVelevatorMotors(m_direction);
             }

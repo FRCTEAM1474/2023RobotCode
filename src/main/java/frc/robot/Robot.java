@@ -45,6 +45,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ShiftingGearboxesSubsystem;
 //import frc.robot.subsystems.drivetrainsubsystem;
 import frc.robot.subsystems.grippersubsystem;
+import frc.robot.subsystems.velevatorsubsystem;
 import frc.robot.subsystems.blinkinsubsystem;
 
 /**
@@ -166,18 +167,19 @@ public class Robot extends TimedRobot {
     extendflipperbutton.whileTrue(new flipperinnieandoutiecommand(-0.25));
     retractflipperbutton.whileTrue(new flipperinnieandoutiecommand(0.25));
 
-    extendsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(0.1));
-    retractsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(-0.1));
+    extendsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(0.6));
+    retractsliderbutton.whileTrue(new slelavatorinnieandoutiecommand(-0.75));
 
-    extendhelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(-0.4));
-    retracthelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(0.4));
+    extendhelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(0.6));
+    retracthelevatorbutton.whileTrue(new helevatorinnieandoutiecommand(-0.75));
 
-    extendvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(0.1));
-    retractvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(-0.1));
+    extendvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(0.4));
+    retractvelevatorbutton.whileTrue(new velevatoruppieanddowniecommand(-0.4));
 
-    movevelevatortobottom.whileTrue(new velevatorEXACTuppieanddowniecommand(1)); //should be 0 and not whileTrue was 5
-    movevelevatortomidanddoublesubstation.whileTrue(new velevatorEXACTuppieanddowniecommand(44)); //should not be whileTrue
-    movevelevatortohigh.whileTrue(new velevatorEXACTuppieanddowniecommand(62)); //should be 63 and not whileTrue was 58
+    //movevelevatortobottom.whileTrue(new velevatorEXACTuppieanddowniecommand(10)); //should be 0 and not whileTrue was 5
+    //movevelevatortomidanddoublesubstation.whileTrue(new velevatorEXACTuppieanddowniecommand(80)); //should not be whileTrue
+    //movevelevatortohigh.whileTrue(new velevatorEXACTuppieanddowniecommand(106)); //should be 63 and not whileTrue was 58
+    
     //change below to onTrue()
     /*groundactiongroup.whileTrue(Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1), new velevatorEXACTuppieanddowniecommand(5)));
     midactiongroup.whileTrue(Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1), new velevatorEXACTuppieanddowniecommand(44)));
@@ -201,6 +203,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+
+
+
+    SmartDashboard.putNumber("velevator rotation value", velevatorsubsystem.velevatorencoderposition());
+
     SmartDashboard.putNumber("encoderleft", drivetrain.getLeftLeadDriveDistanceMeters());
     SmartDashboard.putNumber("encoderright", drivetrain.getRightLeadDriveDistanceMeters());
     SmartDashboard.putNumber("gyro heading", drivetrain.getHeadingDegrees());
@@ -233,6 +240,8 @@ public class Robot extends TimedRobot {
     startTime = Timer.getFPGATimestamp();
     Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
 
+    frc.robot.Constants.OperatorConstants.topposition = 107;
+
     //System.out.println("autonomousinit1");
     /*Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
 
@@ -251,27 +260,42 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     double time = Timer.getFPGATimestamp();
     double timedifference = time - startTime;
-    if (timedifference > 0 && timedifference < 2 ) {
-      new velevatorEXACTuppieanddowniecommand(61);
+    if (timedifference > 0 && timedifference < 1 ) {
+      new flipperinnieandoutiecommand(-0.25).schedule();
+      //new velevatoruppieanddowniecommand(0.4).schedule();
+      //grippersubsystem.m_solenoid.set(true);
+      //grippersubsystem.m_solenoidTwo.set(false);
+      
     }
-    if (timedifference > 2 && timedifference < 7) {
-      Commands.parallel(new helevatorinnieandoutiecommand(-0.1), new slelavatorinnieandoutiecommand(0.1));
+    if (timedifference > 1 && timedifference < 4) {
+      new velevatoruppieanddowniecommand(0.4).schedule();
     }
-    if (timedifference > 7 && timedifference < 7.25) {
-      //ShiftingGearboxesSubsystem.m_solenoid.set(true);
-      //ShiftingGearboxesSubsystem.m_solenoidTwo.set(false);
-      new flipperinnieandoutiecommand(-0.25);
+    if (timedifference > 3 && timedifference < 6) {
+      
+      Commands.parallel(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6)).schedule();
     }
-    if (timedifference > 7.25 && timedifference < 7.5) {
+    if (timedifference > 6 && timedifference < 6.25) {
       grippersubsystem.m_solenoid.set(true);
       grippersubsystem.m_solenoidTwo.set(false);
     }
-    if (timedifference > 7.5 && timedifference < 12.5) {
-      Commands.parallel(new helevatorinnieandoutiecommand(0.1), new slelavatorinnieandoutiecommand(-0.1));
+    if (timedifference > 6.5 && timedifference < 9) {
+      Commands.parallel(new helevatorinnieandoutiecommand(-0.6), new slelavatorinnieandoutiecommand(-0.6)).schedule();
+      //grippersubsystem.m_solenoid.set(true);
+      //grippersubsystem.m_solenoidTwo.set(false);
     }
-    if (timedifference > 12.5 && timedifference < 15) {
-      new flipperinnieandoutiecommand(0.25);
-      //drivetrain.m_robotDrive.arcadeDrive(-0.1, 0);
+    if (timedifference > 9 && timedifference < 10) {
+      //Commands.parallel(new helevatorinnieandoutiecommand(0.4), new slelavatorinnieandoutiecommand(-0.4)).schedule();
+      grippersubsystem.m_solenoid.set(false);
+      grippersubsystem.m_solenoidTwo.set(true);
+    }
+    if (timedifference > 9 && timedifference < 12) {
+      //new flipperinnieandoutiecommand(0.25);
+      //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
+      new velevatoruppieanddowniecommand(-0.4).schedule();
+    }
+    if (timedifference > 12 && timedifference < 15) {
+      //drivetrain.m_robotDrive.arcadeDrive(-0.6, 0);
+      drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
     }
   }
 
@@ -291,6 +315,13 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+
+    if (m_stickTwo.getRawButton(7)) {
+      frc.robot.Constants.OperatorConstants.topposition = 107;
+    }
+    if (m_stickTwo.getRawButton(9)) {
+      frc.robot.Constants.OperatorConstants.topposition = 80;
+    }
 
     if (m_stick.getRawButton(8)) {
       blinkinsubsystem.setSpeed("Yellow");

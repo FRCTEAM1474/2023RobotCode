@@ -16,10 +16,6 @@ public class velevatorEXACTuppieanddowniecommand extends CommandBase {
     @Override
     public void initialize() {
 
-        
-
-        
-
     }
 
     @Override
@@ -28,10 +24,12 @@ public class velevatorEXACTuppieanddowniecommand extends CommandBase {
         bottomlimitswitchstatus = velevatorsubsystem.retractedvelevatorlimitswitchstatus();
         toplimitswitchstatus = velevatorsubsystem.extendedvelevatorlimitswitchstatus();
 
+        if (toplimitswitchstatus) {
+
         if (currentposition < positiontogoto) {
-            if (!toplimitswitchstatus) {
+            if (toplimitswitchstatus) {
                 if (currentposition != positiontogoto) {
-                    velevatorsubsystem.setspeedofVelevatorMotors(0.1);
+                    velevatorsubsystem.setspeedofVelevatorMotors(0.4);
                 }
                 
             }
@@ -41,9 +39,9 @@ public class velevatorEXACTuppieanddowniecommand extends CommandBase {
 
         }
         if (positiontogoto < currentposition) {
-            if (!bottomlimitswitchstatus) {
+            if (bottomlimitswitchstatus) {
                 if (currentposition != positiontogoto) {
-                    velevatorsubsystem.setspeedofVelevatorMotors(-0.1);
+                    velevatorsubsystem.setspeedofVelevatorMotors(-0.4);
                 }
                 
             }
@@ -55,4 +53,14 @@ public class velevatorEXACTuppieanddowniecommand extends CommandBase {
             velevatorsubsystem.setspeedofVelevatorMotors(0);
         }
     }
+    else {
+        velevatorsubsystem.setspeedofVelevatorMotors(0);
+    }
+}
+
+    @Override
+    public void end(boolean interup) {
+        velevatorsubsystem.setspeedofVelevatorMotors(0);
+    }
+
 }
