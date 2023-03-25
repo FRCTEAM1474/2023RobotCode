@@ -79,13 +79,13 @@ public class Robot extends TimedRobot {
 
   public final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 
-  final String kDefaultAuto = "score and back up and turn";
-    final String kCustomAuto = "score and back up and go forward again for charge station";
-    final String kNoAuto = "no auto :(";
+    final String kScoreAuto = "score";
+    final String kScoreandBackUpAuto = "score and back up";
+    /*final String kNoAuto = "no auto :(";
     final String kBackUp = "just backup";
     final String kDropGamePiece = "just flip out and drop the gamepiece";
     final String kDropandBackUp = "drop and back up";
-    final String kDropandDoNothing = "drop and do nothing";
+    final String kDropandDoNothing = "drop and do nothing";*/
     String m_autoSelected;
     final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -124,13 +124,8 @@ public class Robot extends TimedRobot {
 
     drivetrain.zeroOdometry();
 
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    m_chooser.addOption("No Auto", kNoAuto);
-    m_chooser.addOption("Backup Auto", kBackUp);
-    m_chooser.addOption("Drop Gamepiece", kDropGamePiece);
-    m_chooser.addOption("Drop and Backup", kDropandBackUp);
-    m_chooser.addOption("Drop and Do Nothing", kDropandDoNothing);
+    m_chooser.setDefaultOption("Score Auto", kScoreAuto);
+    m_chooser.addOption("Score and Back Up Auto", kScoreandBackUpAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
     compressor.enableDigital();
@@ -264,51 +259,104 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     double time = Timer.getFPGATimestamp();
     double timedifference = time - startTime;
-    if (timedifference > 0 && timedifference < 1 ) {
-      new flipperinnieandoutiecommand(-0.25).schedule();
-      //new velevatoruppieanddowniecommand(0.4).schedule();
-      //grippersubsystem.m_solenoid.set(true);
-      //grippersubsystem.m_solenoidTwo.set(false);
-      
-    }
-    if (timedifference > 1 && timedifference < 4) {
-      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
-      new velevatoruppieanddowniecommand(0.4).schedule();
-    }
-    if (timedifference > 3 && timedifference < 6) {
-      //ParallelCommandGroup shelevator = new ParallelCommandGroup(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6));
-      //frc.robot.Robot.autonomousPeriodic.shelevator
-      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
-      Commands.parallel(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6)).schedule();
-    }
-    if (timedifference > 6 && timedifference < 6.25) {
-      grippersubsystem.m_solenoid.set(true);
-      grippersubsystem.m_solenoidTwo.set(false);
 
+    switch (m_autoSelected) {
+      case kScoreAuto:
+      if (timedifference > 0 && timedifference < 1 ) {
+        new flipperinnieandoutiecommand(-0.25).schedule();
+        //new velevatoruppieanddowniecommand(0.4).schedule();
+        //grippersubsystem.m_solenoid.set(true);
+        //grippersubsystem.m_solenoidTwo.set(false);
+        
+      }
+      if (timedifference > 1 && timedifference < 4) {
+        frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
+        new velevatoruppieanddowniecommand(0.4).schedule();
+      }
+      if (timedifference > 3 && timedifference < 6) {
+        //ParallelCommandGroup shelevator = new ParallelCommandGroup(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6));
+        //frc.robot.Robot.autonomousPeriodic.shelevator
+        frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
+        Commands.parallel(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6)).schedule();
+      }
+      if (timedifference > 6 && timedifference < 6.25) {
+        grippersubsystem.m_solenoid.set(true);
+        grippersubsystem.m_solenoidTwo.set(false);
+  
+        
       
+      }
+      if (timedifference > 6.5 && timedifference < 9) {
+        frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
+        Commands.parallel(new helevatorinnieandoutiecommand(-0.6), new slelavatorinnieandoutiecommand(-0.6)).schedule();
+        //grippersubsystem.m_solenoid.set(true);
+        //grippersubsystem.m_solenoidTwo.set(false);
+      }
+      if (timedifference > 9 && timedifference < 10) {
+        //Commands.parallel(new helevatorinnieandoutiecommand(0.4), new slelavatorinnieandoutiecommand(-0.4)).schedule();
+        grippersubsystem.m_solenoid.set(false);
+        grippersubsystem.m_solenoidTwo.set(true);
+      }
+      if (timedifference > 9 && timedifference < 12) {
+        frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
+        //new flipperinnieandoutiecommand(0.25);
+        //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
+        new velevatoruppieanddowniecommand(-0.4).schedule();
+      }
+      if (timedifference > 12 && timedifference < 15) {
+        //drivetrain.m_robotDrive.arcadeDrive(-0.6, 0);
+        //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
+      }
+      break;
+      case kScoreandBackUpAuto:
+      if (timedifference > 0 && timedifference < 1 ) {
+        new flipperinnieandoutiecommand(-0.25).schedule();
+        //new velevatoruppieanddowniecommand(0.4).schedule();
+        //grippersubsystem.m_solenoid.set(true);
+        //grippersubsystem.m_solenoidTwo.set(false);
+        
+      }
+      if (timedifference > 1 && timedifference < 4) {
+        frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
+        new velevatoruppieanddowniecommand(0.4).schedule();
+      }
+      if (timedifference > 3 && timedifference < 6) {
+        //ParallelCommandGroup shelevator = new ParallelCommandGroup(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6));
+        //frc.robot.Robot.autonomousPeriodic.shelevator
+        frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
+        Commands.parallel(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6)).schedule();
+      }
+      if (timedifference > 6 && timedifference < 6.25) {
+        grippersubsystem.m_solenoid.set(true);
+        grippersubsystem.m_solenoidTwo.set(false);
+  
+        
+      
+      }
+      if (timedifference > 6.5 && timedifference < 9) {
+        frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
+        Commands.parallel(new helevatorinnieandoutiecommand(-0.6), new slelavatorinnieandoutiecommand(-0.6)).schedule();
+        //grippersubsystem.m_solenoid.set(true);
+        //grippersubsystem.m_solenoidTwo.set(false);
+      }
+      if (timedifference > 9 && timedifference < 10) {
+        //Commands.parallel(new helevatorinnieandoutiecommand(0.4), new slelavatorinnieandoutiecommand(-0.4)).schedule();
+        grippersubsystem.m_solenoid.set(false);
+        grippersubsystem.m_solenoidTwo.set(true);
+      }
+      if (timedifference > 9 && timedifference < 12) {
+        frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
+        //new flipperinnieandoutiecommand(0.25);
+        //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
+        new velevatoruppieanddowniecommand(-0.4).schedule();
+      }
+      if (timedifference > 12 && timedifference < 15) {
+        //drivetrain.m_robotDrive.arcadeDrive(-0.6, 0);
+        drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
+      }
+      break;
+    }
     
-    }
-    if (timedifference > 6.5 && timedifference < 9) {
-      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
-      Commands.parallel(new helevatorinnieandoutiecommand(-0.6), new slelavatorinnieandoutiecommand(-0.6)).schedule();
-      //grippersubsystem.m_solenoid.set(true);
-      //grippersubsystem.m_solenoidTwo.set(false);
-    }
-    if (timedifference > 9 && timedifference < 10) {
-      //Commands.parallel(new helevatorinnieandoutiecommand(0.4), new slelavatorinnieandoutiecommand(-0.4)).schedule();
-      grippersubsystem.m_solenoid.set(false);
-      grippersubsystem.m_solenoidTwo.set(true);
-    }
-    if (timedifference > 9 && timedifference < 12) {
-      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
-      //new flipperinnieandoutiecommand(0.25);
-      //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
-      new velevatoruppieanddowniecommand(-0.4).schedule();
-    }
-    if (timedifference > 12 && timedifference < 15) {
-      //drivetrain.m_robotDrive.arcadeDrive(-0.6, 0);
-      //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
-    }
   }
 
   @Override
@@ -334,6 +382,9 @@ public class Robot extends TimedRobot {
     }
     if (m_stickTwo.getRawButton(9)) {
       frc.robot.Constants.OperatorConstants.topposition = 80;
+    }
+    if (m_stickTwo.getRawButton(11)) {
+      frc.robot.Constants.OperatorConstants.topposition = 96;
     }
 
     if (m_stick.getRawButton(8)) {
