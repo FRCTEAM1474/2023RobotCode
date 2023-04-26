@@ -236,8 +236,8 @@ public class Robot extends TimedRobot {
     startTime = Timer.getFPGATimestamp();
     Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
 
-    frc.robot.Constants.OperatorConstants.topposition = 107;
-
+    //frc.robot.Constants.OperatorConstants.topposition = 107;
+    frc.robot.Constants.OperatorConstants.topposition = 80;
     //new ParallelCommandGroup(null)
     
 
@@ -259,8 +259,54 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     double time = Timer.getFPGATimestamp();
     double timedifference = time - startTime;
+    if (timedifference > 1.5 && timedifference < 2.5 ) {
+      new flipperinnieandoutiecommand(-0.25).schedule();
+      //new velevatoruppieanddowniecommand(0.4).schedule();
+      //grippersubsystem.m_solenoid.set(true);
+      //grippersubsystem.m_solenoidTwo.set(false);
+      
+    }
+    if (timedifference > 0 && timedifference < 3) {
+      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
+      new velevatoruppieanddowniecommand(0.4).schedule();
+    }
+    if (timedifference > 3 && timedifference < 6) {
+      //ParallelCommandGroup shelevator = new ParallelCommandGroup(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6));
+      //frc.robot.Robot.autonomousPeriodic.shelevator
+      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 1;
+      new helevatorinnieandoutiecommand(0.6);
+      //Commands.parallel(new helevatorinnieandoutiecommand(0.6), new slelavatorinnieandoutiecommand(0.6)).schedule();
+    }
+    if (timedifference > 6 && timedifference < 6.25) {
+      grippersubsystem.m_solenoid.set(true);
+      grippersubsystem.m_solenoidTwo.set(false);
 
-    switch (m_autoSelected) {
+      
+    
+    }
+    if (timedifference > 6.5 && timedifference < 9) {
+      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
+      new helevatorinnieandoutiecommand(-0.6);
+      //Commands.parallel(new helevatorinnieandoutiecommand(-0.6), new slelavatorinnieandoutiecommand(-0.6)).schedule();
+      //grippersubsystem.m_solenoid.set(true);
+      //grippersubsystem.m_solenoidTwo.set(false);
+    }
+    if (timedifference > 9 && timedifference < 10) {
+      //Commands.parallel(new helevatorinnieandoutiecommand(0.4), new slelavatorinnieandoutiecommand(-0.4)).schedule();
+      grippersubsystem.m_solenoid.set(false);
+      grippersubsystem.m_solenoidTwo.set(true);
+    }
+    if (timedifference > 9 && timedifference < 12) {
+      frc.robot.Constants.OperatorConstants.shelevatorrestriction = 2;
+      //new flipperinnieandoutiecommand(0.25);
+      //drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
+      new velevatoruppieanddowniecommand(-0.4).schedule();
+    }
+    if (timedifference > 12 && timedifference < 15) {
+      //drivetrain.m_robotDrive.arcadeDrive(-0.6, 0);
+      drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
+    }
+    /*switch (m_autoSelected) {
       case kScoreAuto:
       if (timedifference > 0 && timedifference < 1 ) {
         new flipperinnieandoutiecommand(-0.25).schedule();
@@ -355,7 +401,7 @@ public class Robot extends TimedRobot {
         drivetrain.m_robotDrive.arcadeDrive(-0.75, 0);
       }
       break;
-    }
+    }*/
     
   }
 
